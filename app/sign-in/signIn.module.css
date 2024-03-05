@@ -1,0 +1,26 @@
+.easeInAnim{
+    display: block;
+    animation:ease-in-anim 1.3s ease-in-out ;
+}
+
+@keyframes ease-in-anim {
+    0%{
+        opacity: 30%;
+    }
+    100%{
+        opacity: 100%;
+    }
+}
+.easeOutAnim{
+    display: none;
+    animation:ease-out-anim 1.3s ease-out ;
+}
+
+@keyframes ease-out-anim {
+    0%{
+        opacity: 100%;
+    }
+    100%{
+        opacity: 30%;
+    }
+}
