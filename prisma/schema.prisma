@@ -14,9 +14,37 @@ datasource db {
 }
 
 model Users {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId()
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId()
   name     String
-  username String @unique
-  email    String @unique
+  username String    @unique
+  email    String    @unique
   password String
+  picture  String?
+  post     post[]
+  like     like[]
+  comment  comment[]
+}
+
+model post {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId()
+  title   String
+  user    Users     @relation(fields: [id], references: [id], onDelete: Cascade)
+  image   String[]
+  like    like[]
+  comment comment[]
+}
+
+model like {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId()
+  user Users  @relation(fields: [id], references: [id], onDelete: Cascade)
+  post post   @relation(fields: [id], references: [id], onDelete: Cascade)
+}
+
+model comment {
+  id    String   @id @default(auto()) @map("_id") @db.ObjectId()
+  user  Users    @relation(fields: [id], references: [id], onDelete: Cascade)
+  post  post     @relation(fields: [id], references: [id], onDelete: Cascade)
+  text  String
+  reply String
+  like  String[]
 }

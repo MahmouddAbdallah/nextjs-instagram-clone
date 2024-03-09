@@ -4,8 +4,7 @@ import FormData from './components/FormData'
 import Link from 'next/link'
 import Image from 'next/image'
 import ImageSlider from './components/ImageSlider'
-
-const SignUp = () => {
+const SignIn = () => {
 
     return (
         <div className='flex justify-center items-center min-h-screen'>
@@ -51,4 +50,4 @@ const SignUp = () => {
     )
 }
 
-export default SignUp
+export default SignIn

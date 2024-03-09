@@ -1,6 +1,7 @@
 'use client';
 import ErrorMsg from '@/app/components/ErrorMsg';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 type dataForm = {
     email: string,
@@ -10,14 +11,17 @@ type dataForm = {
 }
 const FormData = () => {
     const { register, handleSubmit, formState: { errors, isValid } } = useForm<dataForm>();
+    const router = useRouter();
+
     const onSubmit = handleSubmit(async (formData) => {
         try {
             const res = await fetch(`http://localhost:3000/api/auth/sign-up`, {
                 method: "POST",
                 body: JSON.stringify(formData),
             })
-            const data = await res.json()
+            const data = await res.json();
             console.log(data);
+            router.push('/')
         } catch (error) {
             console.error({ error });
         }

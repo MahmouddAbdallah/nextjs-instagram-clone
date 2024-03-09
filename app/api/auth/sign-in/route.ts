@@ -34,7 +34,6 @@ export async function POST(req: Request) {
             } else {
                 return NextResponse.json({ message: "User not found", status: 401 });
             }
-            return NextResponse.json({ user })
         } else {
             return NextResponse.json({ error: validation.error.errors })
         }

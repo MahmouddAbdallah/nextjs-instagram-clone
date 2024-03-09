@@ -5,6 +5,8 @@ import { GoHome, GoHomeFill } from "react-icons/go";
 import { BsSend, BsFillSendFill } from "react-icons/bs";
 import Link from 'next/link';
 import clsx from 'clsx';
+import CreatePost from './CreatePost';
+import UserIcon from './UserIcon';
 
 const NavsItems = () => {
     const pathname = usePathname();
@@ -20,27 +22,34 @@ const NavsItems = () => {
             href: "/search"
         },
         {
+            name: 'Create',
+            icon: pathname === '/post' ? <MdAddCircle size={23} /> : <MdAddCircleOutline size={23} />,
+            href: ""
+        },
+        {
             name: 'Explore',
             icon: pathname === '/explore' ? <MdExplore size={23} /> : <MdOutlineExplore size={23} />,
             href: "/explore"
         },
         {
             name: 'Messages',
-            icon: pathname === '/messages' ? < BsFillSendFill size={23} /> : <BsSend size={23} />,
+            icon: pathname === '/messages' ? < BsFillSendFill size={20} /> : <BsSend size={20} />,
             href: "/messages"
-        },
-        {
-            name: 'Create',
-            icon: pathname === '/post' ? <MdAddCircle size={23} /> : <MdAddCircleOutline size={23} />,
-            href: "/post"
         },
     ]
     return (
         <ul className='flex justify-between items-center sm:block sm:space-y-7 '>
             {
                 navItems.map(nav =>
-                    <li key={nav.name} className='h-fit w-full'>
-                        <Link href={nav.href} className='w-full h-full flex justify-center py-2'>
+                    <li key={nav.name} className={clsx(
+                        'h-fit w-full relative block',
+                        { "hidden sm:block": nav.name == 'Search' }
+                    )}>
+                        {
+                            nav.name == 'Create' &&
+                            <CreatePost />
+                        }
+                        <Link href={nav.href} className='w-full h-full flex justify-center py-2 '>
                             <div className='flex items-center gap-3 '>
                                 <div>
                                     {nav.icon}
@@ -56,6 +65,9 @@ const NavsItems = () => {
                     </li>
                 )
             }
+            <li className='h-fit w-full relative block sm:hidden'>
+                <UserIcon />
+            </li>
         </ul>
     )
 }
