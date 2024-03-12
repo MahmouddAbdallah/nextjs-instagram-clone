@@ -5,7 +5,7 @@ export type userTypes = {
     name: string,
     username: string,
     email: string,
-    picture: string,
+    picture: string | null,
 }
 export type AppContextTypes = {
     user: userTypes,

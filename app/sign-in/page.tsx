@@ -4,8 +4,14 @@ import FormData from './components/FormData'
 import Link from 'next/link'
 import Image from 'next/image'
 import ImageSlider from './components/ImageSlider'
-const SignIn = () => {
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
+const SignIn = () => {
+    const token = cookies().get('token_auth')
+    if (token) {
+        redirect('/')
+    }
     return (
         <div className='flex justify-center items-center min-h-screen'>
             <div className='hidden md:block'>

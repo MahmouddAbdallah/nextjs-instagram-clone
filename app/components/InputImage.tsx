@@ -7,6 +7,7 @@ interface inputImageProps {
     setImage: React.Dispatch<SetStateAction<string>>
 }
 const InputImage: React.FC<inputImageProps> = ({ setImageFile, image, setImage }) => {
+
     const btnRef = useRef<HTMLButtonElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -31,6 +32,7 @@ const InputImage: React.FC<inputImageProps> = ({ setImageFile, image, setImage }
             setImage(image)
         }
     }
+
     return (
         <div>
             <div className='py-3 h-80 sm:h-96 lg:h-[500px] flex justify-center items-center'>

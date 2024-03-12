@@ -1,0 +1,37 @@
+import { NextRequest, NextResponse } from "next/server";
+import prisma from '@/prisma/client'
+import { verifyAuth } from "@/app/lib/verfiyAuth";
+import uploadImage from "@/app/lib/uploadImage";
+import deleteImage from "@/app/lib/deleteImage";
+import { revalidatePath } from "next/cache";
+
+export const PUT = async (req: NextRequest) => {
+    try {
+        const verfiy = await verifyAuth();
+        if (verfiy) {
+            const formData = await req.formData();
+            const deleteImg = await deleteImage(verfiy.picture as string);
+
+            if (deleteImg) {
+                const pictureURL = await uploadImage(formData.get('picture') as File)
+                const user = await prisma.users.update({
+                    where: {
+                        id: verfiy.id
+                    },
+                    data: {
+                        picture: pictureURL as string
+                    }
+                })
+                revalidatePath('/profile/[userId]', 'layout')
+                return NextResponse.json({ revalidated: true, picture: user?.picture })
+            }
+            else {
+                throw new Error("Cant't upload image")
+            }
+        }
+        else return NextResponse.redirect(new URL('/sign-in', req.url))
+
+    } catch (error) {
+        return NextResponse.json({ error, message: 'There is error in server', status: 400 });
+    }
+}
