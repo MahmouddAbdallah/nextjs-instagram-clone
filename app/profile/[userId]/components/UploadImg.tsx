@@ -6,9 +6,10 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import clsx from 'clsx';
 
 interface props {
-    picture: string | null | undefined
+    picture: string | null | undefined,
+    setPictureUrl: React.Dispatch<React.SetStateAction<string>>
 }
-const UploadImg: React.FC<props> = ({ picture }) => {
+const UploadImg: React.FC<props> = ({ picture, setPictureUrl }) => {
 
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -56,8 +57,11 @@ const UploadImg: React.FC<props> = ({ picture }) => {
             const res = await fetch('http://localhost:3000/api/user/photo', {
                 method: 'PUT',
                 body: formData,
+                cache: 'reload'
             })
             if (!res.ok) throw new Error("Could not upload image");
+            const data = await res.json();
+            setPictureUrl(data?.picture as string)
             removeImage()
         } catch (error) {
             console.log(error);

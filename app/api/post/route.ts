@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/prisma/client'
-import cloudinary from 'cloudinary'
 import { verifyAuth } from '@/app/lib/verfiyAuth';
 import uploadImage from '@/app/lib/uploadImage';
 
@@ -22,14 +21,16 @@ export async function POST(req: Request) {
                         }
                     },
                     title,
-                    image: [url as string]
+                    image: url as string
                 }
             })
             return NextResponse.json({ post })
-
+        } else {
+            return NextResponse.redirect(new URL('/sign-in', req.url))
         }
 
-    } catch (error) {
-        console.error();
+    } catch (error: any) {
+        console.log(error);
+        return NextResponse.json({ error })
     }
 }

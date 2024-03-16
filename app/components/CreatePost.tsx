@@ -1,12 +1,16 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 import { useRef, useState } from 'react'
 import { IoMdClose } from "react-icons/io";
 import useClickOutside from '../hooks/useClickOutside';
 import InputImage from './InputImage';
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
 
 const CreatePost = () => {
     const [open, setOpen] = useState(false);
     const [warn, setWarn] = useState(false);
+    const [loading, setLoading] = useState(false)
     const [image, setImage] = useState('' as string);
     const [imageFile, setImageFile] = useState({} as object);
     const titleRef = useRef<HTMLTextAreaElement | null>(null)
@@ -28,22 +32,28 @@ const CreatePost = () => {
 
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append('image', imageFile as File);
-        if (titleRef.current) {
-            formData.append('title', titleRef.current.value);
+        try {
+            e.preventDefault();
+            setOpen(!open)
+            setLoading(true)
+            const formData = new FormData();
+            formData.append('image', imageFile as File);
+            if (titleRef.current) {
+                formData.append('title', titleRef.current.value);
+            }
+            const res = await fetch(`http://localhost:3000/api/post`, {
+                method: "POST",
+                body: formData
+            });
+            if (!res.ok) throw new Error("Could not create post");
+
+            const data = await res.json();
+            console.log(data);
+            setLoading(false)
+            removeImage();
+        } catch (error) {
+            console.error(error);
         }
-        const res = await fetch(`http://localhost:3000/api/post`, {
-            method: "POST",
-            body: formData
-        });
-
-        if (!res.ok) throw new Error("Could not create post");
-
-        const data = await res.json();
-        console.log(data);
-        removeImage();
     }
     return (
         <>
@@ -104,6 +114,21 @@ const CreatePost = () => {
                             </div>
                         </div>
                     </div>}
+                </div>
+            }
+            {loading &&
+                <div className='fixed bg-green-500 bottom-14 right-1 px-1 py-2 rounded flex gap-2'>
+                    <div className='px-1 relative flex justify-center items-center '>
+                        <img
+                            className='w-10 h-10 rounded '
+                            src={image}
+                            alt=""
+                        />
+                        <div className='absolute h-full w-full flex justify-center items-center'>
+                            <AiOutlineLoading3Quarters size={20} className='fill-white animate-spin' />
+                        </div>
+                    </div>
+                    <span className='text-sm text-white font-semibold'>Uploaded Image <br /> Preview</span>
                 </div>
             }
         </>

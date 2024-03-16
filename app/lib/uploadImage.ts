@@ -1,5 +1,6 @@
 
 import { v2 as cloudinary } from 'cloudinary';
+import sharp from 'sharp'
 export default async function uploadImage(file: File) {
     cloudinary.config({
         cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
@@ -8,9 +9,13 @@ export default async function uploadImage(file: File) {
     })
     const arrayBuffer = await file.arrayBuffer();
     const buffer = new Uint8Array(arrayBuffer);
+
+    const resizedBuffer = await sharp(buffer)
+        .resize({ width: 1024, height: 1024 }) // Resize to 1024x1024
+        .toBuffer();
+
     const url = await new Promise((resolve, reject) => {
         cloudinary.uploader.upload_stream({
-            chunk_size: 1024 * 1024,
             folder: 'NextJs',
         },
             function (error, result) {
@@ -22,7 +27,7 @@ export default async function uploadImage(file: File) {
                     resolve(result.url);
                 }
             }
-        ).end(buffer)
+        ).end(resizedBuffer)
     })
     return url
 }

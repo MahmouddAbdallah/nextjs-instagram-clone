@@ -3,7 +3,6 @@ import prisma from '@/prisma/client'
 import { verifyAuth } from "@/app/lib/verfiyAuth";
 import uploadImage from "@/app/lib/uploadImage";
 import deleteImage from "@/app/lib/deleteImage";
-import { revalidatePath } from "next/cache";
 
 export const PUT = async (req: NextRequest) => {
     try {
@@ -22,8 +21,7 @@ export const PUT = async (req: NextRequest) => {
                         picture: pictureURL as string
                     }
                 })
-                revalidatePath('/profile/[userId]', 'layout')
-                return NextResponse.json({ revalidated: true, picture: user?.picture })
+                return NextResponse.json({ picture: user?.picture })
             }
             else {
                 throw new Error("Cant't upload image")

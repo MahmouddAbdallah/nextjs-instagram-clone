@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image';
 import React, { SetStateAction, useEffect, useRef, useState } from 'react'
 
@@ -33,21 +34,34 @@ const InputImage: React.FC<inputImageProps> = ({ setImageFile, image, setImage }
         }
     }
 
+    console.log(image);
+
     return (
         <div>
             <div className='py-3 h-80 sm:h-96 lg:h-[500px] flex justify-center items-center'>
                 {
                     image ?
                         <div >
-                            <Image
-                                src={image}
-                                alt=''
-                                className='w-full  h-80 sm:h-96 lg:h-[500px] object-contain '
-                                height={200}
-                                width={200}
-                            />
+                            {image.startsWith('blob') ?
+                                <Image
+                                    src={image}
+                                    alt=''
+                                    className='w-full  h-80 sm:h-96 lg:h-[500px] object-contain '
+                                    height={200}
+                                    width={200}
+                                />
+                                :
+                                <video
+                                    muted
+                                    className='w-full  h-80 sm:h-96 lg:h-[500px] '
+                                    autoPlay
+                                    loop>
+                                    <source src={image} />
+                                </video>
+                            }
                         </div>
-                        : <div>
+                        :
+                        <div>
                             <input type="file" onChange={handleOnChangeInput} className='hidden' ref={inputRef} />
                             <button ref={btnRef} className='text-[10px] font-semibold text-white bg-blue-500 px-3 py-1 rounded-md'>
                                 Select from computer
