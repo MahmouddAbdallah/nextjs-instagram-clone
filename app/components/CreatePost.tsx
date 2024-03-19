@@ -51,6 +51,7 @@ const CreatePost = () => {
             console.log(data);
             setLoading(false)
             removeImage();
+            window.location.reload()
         } catch (error) {
             console.error(error);
         }

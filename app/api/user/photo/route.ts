@@ -9,9 +9,24 @@ export const PUT = async (req: NextRequest) => {
         const verfiy = await verifyAuth();
         if (verfiy) {
             const formData = await req.formData();
-            const deleteImg = await deleteImage(verfiy.picture as string);
-
-            if (deleteImg) {
+            if (verfiy.picture) {
+                const deleteImg = await deleteImage(verfiy.picture as string);
+                if (deleteImg) {
+                    const pictureURL = await uploadImage(formData.get('picture') as File)
+                    const user = await prisma.users.update({
+                        where: {
+                            id: verfiy.id
+                        },
+                        data: {
+                            picture: pictureURL as string
+                        }
+                    })
+                    return NextResponse.json({ picture: user?.picture })
+                }
+                else {
+                    throw new Error("Cant't upload image")
+                }
+            } else {
                 const pictureURL = await uploadImage(formData.get('picture') as File)
                 const user = await prisma.users.update({
                     where: {
@@ -23,13 +38,10 @@ export const PUT = async (req: NextRequest) => {
                 })
                 return NextResponse.json({ picture: user?.picture })
             }
-            else {
-                throw new Error("Cant't upload image")
-            }
         }
         else return NextResponse.redirect(new URL('/sign-in', req.url))
 
-    } catch (error) {
-        return NextResponse.json({ error, message: 'There is error in server', status: 400 });
+    } catch (error: any) {
+        return NextResponse.json({ error: error?.message, message: 'There is error in server', status: 400 });
     }
 }

@@ -11,7 +11,6 @@ import CommentUserHeader from './CommentUserHeader';
 const ViewPost = (
     {
         post,
-        open,
         setOpen
     }: {
         post: postType,
@@ -23,6 +22,7 @@ const ViewPost = (
     const { register, setValue, formState: { isValid }, handleSubmit } = useForm<commentType>();
 
     const [comments, setComments] = useState<commentType[]>([])
+    const [like, setLike] = useState<string[]>([])
 
     const onSubmit = handleSubmit(async (data) => {
         try {
@@ -37,7 +37,6 @@ const ViewPost = (
             const comment = await res.json();
             setComments([...comments, comment.comment])
             setValue('text', "")
-            // window.location.reload()
         } catch (error) {
             console.error(error);
         }
@@ -50,6 +49,7 @@ const ViewPost = (
             })
             if (!res.ok) throw new Error('something went wrong')
             const comments = await res.json();
+            console.log({ comments });
             setComments(comments?.comments)
         }
         , [post.id])
@@ -81,7 +81,7 @@ const ViewPost = (
                         username={post?.user?.username as string}
                     />
                     <div className='flex-1 py-3 overflow-auto'>
-                        <Comment comments={comments} />
+                        <Comment comments={comments} setLike={setLike} like={like} />
                     </div>
                     <form onSubmit={onSubmit} className='w-full flex border-t'>
                         <input

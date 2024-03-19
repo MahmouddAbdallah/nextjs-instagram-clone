@@ -14,56 +14,41 @@ datasource db {
 }
 
 model Users {
-  id            String       @id @default(auto()) @map("_id") @db.ObjectId()
-  name          String
-  username      String       @unique
-  email         String       @unique
-  password      String
-  picture       String?
-  post          post[]
-  like          like[]
-  comment       comment[]
-  LikeComment   LikeComment? @relation(fields: [likeCommentId], references: [id])
-  likeCommentId String?      @db.ObjectId()
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId()
+  name        String
+  username    String        @unique
+  email       String        @unique
+  password    String
+  picture     String?
+  Post        Post[]
+  postId      String?       @db.ObjectId()
+  CommentUser Comment[]     @relation("user")
+  CommentLike CommentLike[]
 }
 
-model post {
+model Post {
   id      String    @id @default(auto()) @map("_id") @db.ObjectId()
   title   String
   user    Users     @relation(fields: [userId], references: [id])
   userId  String    @db.ObjectId()
   image   String
-  like    like[]
-  comment comment[]
+  Comment Comment[]
 }
 
-model like {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId()
-  user   Users  @relation(fields: [userId], references: [id])
-  userId String @db.ObjectId()
-  post   post   @relation(fields: [postId], references: [id])
-  postId String @db.ObjectId()
-}
-
-model comment {
+model Comment {
   id          String        @id @default(auto()) @map("_id") @db.ObjectId()
-  user        Users         @relation(fields: [userId], references: [id])
-  userId      String        @db.ObjectId()
-  post        post          @relation(fields: [postId], references: [id])
-  postId      String        @db.ObjectId()
   text        String
-  reply       String?
-  like        String[]
-  LikeComment LikeComment[]
+  post        Post          @relation(fields: [postId], references: [id])
+  postId      String        @db.ObjectId()
+  user        Users         @relation(fields: [userId], references: [id], name: "user")
+  userId      String        @db.ObjectId()
+  CommentLike CommentLike[]
 }
 
-model LikeComment {
+model CommentLike {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId()
-  user      Users[]
-  comment   comment @relation(fields: [commentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user      Users   @relation(fields: [userId], references: [id])
+  userId    String  @db.ObjectId()
+  comment   Comment @relation(fields: [commentId], references: [id])
   commentId String  @db.ObjectId()
-}
-
-model Follow {
-  id String @id @default(auto()) @map("_id") @db.ObjectId()
 }

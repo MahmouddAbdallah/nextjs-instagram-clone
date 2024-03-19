@@ -9,32 +9,27 @@ export async function PUT(req: NextRequest) {
             const body = await req.json();
             const { commentId } = body
             if (!commentId) return NextResponse.json({ message: 'where the commentId' })
-            let like = await prisma.likeComment.findFirst({
+            const like = await prisma.commentLike.findFirst({
                 where: {
-                    user: {
-                        some: { id: verfiy.id }
-                    }
+                    commentId,
+                    userId: verfiy.id
                 }
             })
             if (like) {
-                like = await prisma.likeComment.delete({
+                const deleteLike = await prisma.commentLike.delete({
                     where: {
                         id: like.id
                     }
                 })
-                return NextResponse.json({ like, deleted: true })
+                return NextResponse.json({ commentId: deleteLike.commentId })
             } else {
-                like = await prisma.likeComment.create({
+                const createLike = await prisma.commentLike.create({
                     data: {
                         commentId,
-                        user: {
-                            connect: {
-                                id: verfiy.id
-                            }
-                        }
+                        userId: verfiy.id
                     }
                 })
-                return NextResponse.json({ like })
+                return NextResponse.json({ commentId: createLike.commentId })
             }
         } else {
             return NextResponse.redirect(new URL('/sign-in', req.url))

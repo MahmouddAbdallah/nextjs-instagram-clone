@@ -8,7 +8,7 @@ import UserIcon from './UserIcon';
 const Sidebar = () => {
 
     return (
-        <div className='border bg-white fixed sm:sticky top-0 w-full sm:w-fit sm:h-screen bottom-0 left-0 px-5 xl:pl-4 xl:pr-32'>
+        <div className='border bg-white fixed sm:sticky sm:top-0 w-full sm:w-fit sm:h-screen bottom-0 left-0 px-5 xl:pl-4 xl:pr-32'>
             <div className='flex flex-col justify-between h-full sm:pb-10'>
                 <div>
                     <div className='mt-12 mb-14 xl:mt-0 xl:mb-0 hidden sm:flex justify-center'>

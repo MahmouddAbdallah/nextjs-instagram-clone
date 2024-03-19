@@ -29,11 +29,12 @@ export type postType = {
 export type commentType = {
     id: string,
     text: string,
-    reply: string
     user: {
         id: string,
         picture: string,
         username: string
     },
-
+    CommentLike: [{
+        userId: string
+    }]
 }

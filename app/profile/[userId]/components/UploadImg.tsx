@@ -64,7 +64,7 @@ const UploadImg: React.FC<props> = ({ picture, setPictureUrl }) => {
             setPictureUrl(data?.picture as string)
             removeImage()
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 

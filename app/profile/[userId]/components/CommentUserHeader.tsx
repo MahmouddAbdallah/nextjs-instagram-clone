@@ -12,13 +12,16 @@ const CommentUserHeader: React.FC<props> = ({ picture, username, className }) =>
     return (
         <div className={`px-2 py-2 ${className} justify-between items-center border-b`}>
             <div className='flex items-center gap-2'>
-                <Image
-                    height={200}
-                    width={200}
-                    className="object-cover w-8 h-8 rounded-full"
-                    src={picture as string}
-                    alt=""
-                />
+                {
+                    picture ?
+                        <Image
+                            height={200}
+                            width={200}
+                            className="object-cover w-8 h-8 rounded-full"
+                            src={picture as string}
+                            alt=""
+                        /> : "..."
+                }
                 <span className='text-sm font-semibold'>
                     {username}
                 </span>
