@@ -20,7 +20,6 @@ export async function POST(req: Request) {
                 const isMatch = await bcrypt.compare(validation.data.password, user.password);
                 if (isMatch) {
                     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string)
-                    delete (user as { password?: string }).password;
                     cookies().set({
                         name: 'token_auth',
                         value: token,

@@ -4,12 +4,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import { FaCamera } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import clsx from 'clsx';
+import { useAppDispatch, useAppSelector } from '@/app/hooks/reduxHooks';
+import user, { setUserData } from '@/redux/features/user';
+import axios from 'axios';
 
-interface props {
-    picture: string | null | undefined,
-    setPictureUrl: React.Dispatch<React.SetStateAction<string>>
-}
-const UploadImg: React.FC<props> = ({ picture, setPictureUrl }) => {
+const UploadImg = () => {
 
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -17,6 +16,8 @@ const UploadImg: React.FC<props> = ({ picture, setPictureUrl }) => {
     const [image, setImage] = useState("")
     const btnRef = useRef<HTMLButtonElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const dispatch = useAppDispatch();
+    const user = useAppSelector((state) => state.user)
 
     const removeImage = () => {
         setOpen(!open)
@@ -61,7 +62,7 @@ const UploadImg: React.FC<props> = ({ picture, setPictureUrl }) => {
             })
             if (!res.ok) throw new Error("Could not upload image");
             const data = await res.json();
-            setPictureUrl(data?.picture as string)
+            dispatch(setUserData({ picture: data.picture }))
             removeImage()
         } catch (error) {
             console.error(error);
@@ -135,7 +136,7 @@ const UploadImg: React.FC<props> = ({ picture, setPictureUrl }) => {
                                     Upload photo
                                 </button>
                                 {
-                                    picture && <button className='text-xs w-full py-3 border-t text-red-500 font-semibold'>
+                                    user.picture && <button className='text-xs w-full py-3 border-t text-red-500 font-semibold'>
                                         Remove Current Photo
                                     </button>
                                 }

@@ -2,6 +2,8 @@ import React from 'react'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import Sidebar from './components/Sidebar'
+import type { Metadata } from "next";
+
 
 const Home = () => {
     const token = cookies().get('token_auth')

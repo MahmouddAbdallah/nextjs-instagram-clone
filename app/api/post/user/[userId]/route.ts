@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/prisma/client'
-import { verifyAuth } from '@/app/lib/verfiyAuth';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 
 export async function GET(req: Request, { params }: { params: Params }) {
@@ -19,9 +18,32 @@ export async function GET(req: Request, { params }: { params: Params }) {
                         name: true,
                         username: true
                     }
-                }
+                },
+                likes: {
+                    take:3,
+                    select: {
+                        id: true,
+                        user:{
+                            select:{
+                                id:true,
+                                picture:true,
+                            }
+                        }
+                    }
+                },
             }
         })
+        
+        // const postsWithLikesCount = await Promise.all(posts.map(async (post) => {
+        //     const likesCount = await prisma.postLike.count({
+        //         where: {
+        //             postId: post.id
+        //         }
+        //     });
+        //     return { ...post, likesCount };
+        // }));
+        // console.log(postsWithLikesCount);
+
         return NextResponse.json({ posts })
 
     } catch (error) {

@@ -14,13 +14,12 @@ const FormData = () => {
     const router = useRouter();
     const onSubmit = handleSubmit(async (formData) => {
         try {
-            const res = await fetch(`http://localhost:3000/api/auth/sign-in`, {
+            await fetch(`http://localhost:3000/api/auth/sign-in`, {
                 method: "POST",
                 body: JSON.stringify(formData),
             })
-            const data = await res.json()
-            console.log(data);
             router.push('/')
+            window.location.reload();
         } catch (error) {
             console.error({ error });
         }

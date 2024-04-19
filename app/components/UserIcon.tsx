@@ -1,21 +1,21 @@
 'use client'
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
-import { useAppContext } from '../context/appContext';
 import Image from 'next/image';
 import clsx from 'clsx';
+import { useAppSelector } from '../hooks/reduxHooks';
 
 const UserIcon = () => {
     const pathname = usePathname();
-    const context = useAppContext()
+    const user = useAppSelector((state) => state.user)
 
     return (
         <div className='h-fit w-full relative'>
-            {context?.user?.name ?
-                <Link href={`/profile/${context?.user.id}`} className='w-full h-full flex justify-center py-2 '>
+            {user?.name ?
+                <Link href={`/profile/${user.id}`} className='w-full h-full flex justify-center py-2 '>
                     <div className='flex items-center gap-3 '>
                         <div>
-                            {context?.user.picture ?
+                            {user.picture ?
                                 <div className={clsx(
                                     'w-6 h-6 overflow-hidden rounded-full flex justify-center items-center',
                                     {
@@ -26,8 +26,8 @@ const UserIcon = () => {
                                         width={50}
                                         height={50}
                                         className='h-full w-full object-cover'
-                                        src={context?.user.picture}
-                                        alt={`instagram profile of user : ${context?.user?.name}`}
+                                        src={user.picture}
+                                        alt={`instagram profile of user : ${user?.name}`}
                                     />
                                 </div>
                                 :
@@ -39,8 +39,8 @@ const UserIcon = () => {
                                 )}>
                                     <span>
                                         {
-                                            context?.
-                                                user?.
+
+                                            user?.
                                                 name?.
                                                 split("")[0]?.
                                                 toUpperCase()

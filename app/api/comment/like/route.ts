@@ -21,7 +21,7 @@ export async function PUT(req: NextRequest) {
                         id: like.id
                     }
                 })
-                return NextResponse.json({ commentId: deleteLike.commentId })
+                return NextResponse.json({ userId: deleteLike.userId, commentId: deleteLike.commentId, type: 'delete' })
             } else {
                 const createLike = await prisma.commentLike.create({
                     data: {
@@ -29,7 +29,7 @@ export async function PUT(req: NextRequest) {
                         userId: verfiy.id
                     }
                 })
-                return NextResponse.json({ commentId: createLike.commentId })
+                return NextResponse.json({ userId: createLike.userId, commentId: createLike.commentId, type: 'create' })
             }
         } else {
             return NextResponse.redirect(new URL('/sign-in', req.url))

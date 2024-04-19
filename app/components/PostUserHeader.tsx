@@ -7,7 +7,7 @@ interface props {
     className: string
 }
 
-const CommentUserHeader: React.FC<props> = ({ picture, username, className }) => {
+const PostUserHeader: React.FC<props> = ({ picture, username, className }) => {
 
     return (
         <div className={`px-2 py-2 ${className} justify-between items-center border-b`}>
@@ -33,4 +33,4 @@ const CommentUserHeader: React.FC<props> = ({ picture, username, className }) =>
     )
 }
 
-export default CommentUserHeader
+export default PostUserHeader

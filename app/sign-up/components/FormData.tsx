@@ -21,6 +21,7 @@ const FormData = () => {
             })
             const data = await res.json();
             console.log(data);
+            window.location.reload();
             router.push('/')
         } catch (error) {
             console.error({ error });

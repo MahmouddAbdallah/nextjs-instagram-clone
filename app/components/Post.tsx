@@ -3,13 +3,16 @@ import { postType } from '@/app/types/user'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import ViewPost from './ViewPost'
+import { useAppDispatch } from '../hooks/reduxHooks'
+import { setPostData } from '@/redux/features/post'
 
 const Post = ({ post }: { post: postType }) => {
-    const [postView, setPostView] = useState<postType>({} as postType)
     const [open, setOpen] = useState(false);
+    const dispatch = useAppDispatch();
+
     const viewPost = () => {
         setOpen(true)
-        setPostView(post)
+        dispatch(setPostData(post as postType))
     }
     return (
         <div className="col-span-4 border relative group">
@@ -23,7 +26,7 @@ const Post = ({ post }: { post: postType }) => {
                 />
             </div>
             <button onClick={viewPost} className='bg-black/10 h-full w-full absolute left-0 top-0 hidden group-hover:block' />
-            {open && < ViewPost post={postView} open={open} setOpen={setOpen} />}
+            {open && < ViewPost open={open} setOpen={setOpen} />}
         </div>
     )
 }

@@ -1,17 +1,17 @@
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import ProfileHeader from './ProfileHeader';
 import NavbarPosts from './NavbarPosts';
+import axios from 'axios';
 
 const Profile = async ({ params }: { params: Params }) => {
     const { userId } = params;
     const fetchUser = async () => {
-        const res = await fetch(`http://localhost:3000/api/user/${userId}`, {
-            method: 'GET',
-            credentials: "include",
-        })
-        if (!res.ok) throw new Error("Could not fetch the user")
-        const data = await res.json()
-        return data.user
+        try {
+            const { data } = await axios.get(`http://localhost:3000/api/user/${userId}`)
+            return data.user
+        } catch (error) {
+            console.error(error);
+        }
     }
     const user = await fetchUser()
 

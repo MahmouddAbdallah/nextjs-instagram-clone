@@ -21,9 +21,10 @@ export async function POST(req: NextRequest) {
                             select: {
                                 id: true,
                                 picture: true,
-                                username: true
+                                username: true,
                             }
-                        }
+                        },
+                        CommentLike: true
                     }
                 })
                 return NextResponse.json({
