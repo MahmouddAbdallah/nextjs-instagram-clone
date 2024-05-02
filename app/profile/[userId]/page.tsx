@@ -2,7 +2,7 @@ import { postType } from "@/app/types/user";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import Post from '../../components/Post'
 
-const Posts = async ({ params }: { params: Params }) => {
+const Profile = async ({ params }: { params: Params }) => {
     const { userId } = params
     const fetchUserPosts = async () => {
         try {
@@ -22,7 +22,7 @@ const Posts = async ({ params }: { params: Params }) => {
     const data = await fetchUserPosts()
 
     return (
-        <div>
+        <div className="pb-10">
             <div className="grid gap-1 grid-cols-12">
                 {data?.posts?.map((post: postType) =>
                     <Post key={post.id} post={post} />
@@ -32,4 +32,4 @@ const Posts = async ({ params }: { params: Params }) => {
     )
 }
 
-export default Posts
+export default Profile

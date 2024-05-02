@@ -5,8 +5,7 @@ import { FaCamera } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from '@/app/hooks/reduxHooks';
-import user, { setUserData } from '@/redux/features/user';
-import axios from 'axios';
+import { setUserData } from '@/redux/features/user';
 
 const UploadImg = () => {
 

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { setUserData } from '@/redux/features/user';
 import { useDispatch } from 'react-redux';
 import { useAppDispatch } from '../hooks/reduxHooks';
+import { Toaster } from 'react-hot-toast';
 const appContext = createContext<{} | undefined>(undefined);
 
 const AppContextProvider = ({ children }: {
@@ -30,12 +31,8 @@ const AppContextProvider = ({ children }: {
     return (
         <appContext.Provider value={{}}>
             {children}
+            <Toaster position='bottom-right' toastOptions={{ duration: 4000 }} />
         </appContext.Provider>
-    )
-}
-export const useAppContext = () => {
-    return (
-        useContext(appContext)
     )
 }
 export default AppContextProvider

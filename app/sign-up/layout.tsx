@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { redirect } from 'next/navigation'
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -11,6 +13,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const token = cookies().get('token_auth')
+  if (token) {
+    redirect('/')
+  }
   return (
     <div>
       <Suspense fallback={<h1>loading</h1>} >

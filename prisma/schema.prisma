@@ -14,17 +14,19 @@ datasource db {
 }
 
 model Users {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId()
-  name        String
-  username    String        @unique
-  email       String        @unique
-  password    String
-  picture     String?
-  Post        Post[]
-  postId      String?       @db.ObjectId()
-  CommentUser Comment[]     @relation("user")
-  CommentLike CommentLike[]
-  PostLike    PostLike[]
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId()
+  name         String
+  username     String        @unique
+  email        String        @unique
+  password     String
+  picture      String?
+  Post         Post[]
+  postId       String?       @db.ObjectId()
+  CommentUser  Comment[]     @relation("user")
+  CommentLike  CommentLike[]
+  PostLike     PostLike[]
+  FollowerUser Follow[]      @relation("following")
+  Followers    Follow[]      @relation("follower")
 }
 
 model Post {
@@ -63,4 +65,12 @@ model CommentLike {
   userId    String  @db.ObjectId()
   comment   Comment @relation(fields: [commentId], references: [id])
   commentId String  @db.ObjectId()
+}
+
+model Follow {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId()
+  following   Users  @relation(fields: [followingId], references: [id], name: "following")
+  followingId String @db.ObjectId()
+  follower    Users  @relation(fields: [followerId], references: [id], name: "follower")
+  followerId  String @db.ObjectId()
 }

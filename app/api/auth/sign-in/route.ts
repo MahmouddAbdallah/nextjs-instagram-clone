@@ -26,17 +26,17 @@ export async function POST(req: Request) {
                         httpOnly: true,
                         maxAge: 5454512,
                     })
-                    return NextResponse.json({ message: "Successfully sign in", status: 200 });
+                    return NextResponse.json({ message: "Successfully sign in", }, { status: 200 });
                 } else {
-                    return NextResponse.json({ message: "Invaild password!!!", status: 401 });
+                    return NextResponse.json({ message: "Invaild password!!!", }, { status: 401 });
                 }
             } else {
-                return NextResponse.json({ message: "User not found", status: 401 });
+                return NextResponse.json({ message: "User not found", }, { status: 401 });
             }
         } else {
-            return NextResponse.json({ error: validation.error.errors })
+            return NextResponse.json({ error: validation.error.errors }, { status: 400 })
         }
     } catch (error) {
-        return NextResponse.json({ error: error, status: 400 })
+        return NextResponse.json({ error: error, }, { status: 400 })
     }
 }

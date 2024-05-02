@@ -1,15 +1,37 @@
 'use client'
+import { useEffect, useCallback, useState } from 'react'
 import { userTypes } from '@/app/types/user'
 import UploadImg from './UploadImg'
 import Image from 'next/image';
 import { IoIosSettings } from "react-icons/io";
 import { useAppSelector } from '@/app/hooks/reduxHooks';
+import axios from 'axios'
+import { useParams } from 'next/navigation'
+import FollowBtn from './FollowBtn';
 
-interface user {
-    user: userTypes | null,
-}
+const ProfileHeader = () => {
+    const { userId } = useParams()
+    const [user, setUser] = useState<userTypes>()
+    const [postsNum, setPostsNum] = useState(0)
+    const [followingNum, setFollowingNum] = useState(0)
+    const [followerNum, setFollowerNum] = useState(0)
+    const userInfo = useCallback(
+        async () => {
+            const { data } = await axios.get(`http://localhost:3000/api/user/user-info?userId=${userId}`)
+            setUser(data.user)
+            setPostsNum(data.postNumber)
+            setFollowingNum(data.followingNumber)
+            setFollowerNum(data.followerNumber)
+        }, [userId]
+    )
+    useEffect(() => {
+        userInfo()
+    }, [userInfo])
 
-const ProfileHeader: React.FC<user> = ({ user }) => {
+    useEffect(() => {
+        document.title = user?.name || "Anonymous"
+    }, [user])
+
     const userApp = useAppSelector((state) => state.user)
 
     return (
@@ -27,7 +49,6 @@ const ProfileHeader: React.FC<user> = ({ user }) => {
                                             className='h-full w-full object-cover'
                                             width={500}
                                             height={300}
-                                            priority={true}
                                         /> :
                                         <Image
                                             src={user.picture as string}
@@ -35,7 +56,6 @@ const ProfileHeader: React.FC<user> = ({ user }) => {
                                             className='h-full w-full object-cover'
                                             width={500}
                                             height={300}
-                                            priority={true}
                                         />
                                 }
                             </div>
@@ -68,9 +88,12 @@ const ProfileHeader: React.FC<user> = ({ user }) => {
                                     <IoIosSettings size={25} />
                                 </div>
                             </div>
-                            : <div className='space-x-3'>
-                                <button className='bg-blue-500 text-white rounded-md px-7 py-2 whitespace-nowrap text-xs font-semibold'>Follow</button>
-                                <button className='bg-black/5 rounded-md px-7 py-2 whitespace-nowrap text-xs font-semibold'>Message</button>
+                            :
+                            <div className='space-x-3'>
+                                <FollowBtn />
+                                <button className='bg-black/5 rounded-md px-7 py-2 whitespace-nowrap text-xs font-semibold'>
+                                    Message
+                                </button>
                             </div>
                         }
                     </div>
@@ -78,19 +101,19 @@ const ProfileHeader: React.FC<user> = ({ user }) => {
                         <div className='hidden sm:flex gap-5'>
                             <span className='text-sm'>
                                 <span className='mr-1 font-semibold'>
-                                    0
+                                    {postsNum}
                                 </span>
                                 posts
                             </span>
                             <button className='text-sm'>
                                 <span className='mr-1 font-semibold'>
-                                    0
+                                    {followerNum}
                                 </span>
                                 followers
                             </button>
                             <button className='text-sm'>
                                 <span className='mr-1 font-semibold'>
-                                    0
+                                    {followingNum}
                                 </span>
                                 following
                             </button>

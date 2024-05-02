@@ -13,16 +13,16 @@ export async function PUT(req: NextRequest) {
             // Checking the user is like of this post or not
             const like = await prisma.postLike.findFirst({ where: { postId: postId, userId: verify.id } })
             if (like) {
-                const deleteLike = await prisma.postLike.delete({ where: { id: like.id } })
-                return NextResponse.json({ message: 'Unliked Successfully', data: deleteLike })
+                await prisma.postLike.delete({ where: { id: like.id } })
+                return NextResponse.json({ message: 'Unliked Successfully', userId: verify.id })
             } else {
-                const newLike = await prisma.postLike.create({
+                await prisma.postLike.create({
                     data: {
                         postId,
                         userId: verify.id
                     }
                 })
-                return NextResponse.json({ message: 'Liked Successfully', data: newLike })
+                return NextResponse.json({ message: 'Liked Successfully', userId: verify.id })
             }
         } else {
             return NextResponse.redirect(new URL('/sign-in', req.url))

@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { IoIosHeart } from "react-icons/io";
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { useCallback, useEffect } from "react";
-import { setLikes } from "@/redux/features/postLike";
+import { setLikes, addLikePost } from "@/redux/features/postLike";
 import Link from 'next/link';
 
 interface props {
@@ -20,8 +20,7 @@ const AddPostLike: React.FC<props> = ({ postId }) => {
             const { data } = await axios.put('http://localhost:3000/api/post/like', {
                 postId
             })
-            console.log(data);
-
+            dispatch(addLikePost())
         } catch (error) {
             console.error(error);
         }

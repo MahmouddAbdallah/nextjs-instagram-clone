@@ -5,6 +5,8 @@ import { IoMdClose } from "react-icons/io";
 import useClickOutside from '../hooks/useClickOutside';
 import InputImage from './InputImage';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { MdOutlineSearch, MdOutlineExplore, MdExplore, MdAddCircle, MdAddCircleOutline } from "react-icons/md";
+import clsx from 'clsx';
 
 
 const CreatePost = () => {
@@ -58,10 +60,26 @@ const CreatePost = () => {
     }
     return (
         <>
-            <button className='absolute w-full h-full z-40' onClick={() => {
-                setOpen(!open)
-                setWarn(false)
-            }} />
+
+            <button
+                onClick={() => {
+                    setOpen(!open)
+                    setWarn(false)
+                }}
+                className='block py-2 sm:py-3 hover:bg-black/5 px-3 xl:pl-3 xl:w-48 rounded-lg'
+            >
+                <div className='flex items-center gap-3'>
+                    <div>
+                        <MdAddCircleOutline size={24} />
+                    </div>
+                    <span className={clsx(
+                        'text-sm text-black/80 hidden xl:block',
+                    )}>
+                        Create
+                    </span>
+                </div>
+            </button>
+
             {open &&
                 <div className={'fixed h-full w-full left-0 top-0 bg-black/50  z-50'}>
                     <div className='h-full relative'>

@@ -23,9 +23,7 @@ export async function POST(req: NextRequest) {
             })
 
             if (user?.email)
-                return NextResponse.json({ message: 'This user is already registered' });
-
-            //username
+                return NextResponse.json({ message: 'This user is already registered' }, { status: 400 });
 
             user = await prisma.users.findUnique({
                 where: {
@@ -33,7 +31,7 @@ export async function POST(req: NextRequest) {
                 }
             })
             if (user?.username)
-                return NextResponse.json({ message: 'This username is already userd, please enter a anthor username' });
+                return NextResponse.json({ message: 'This username is already userd, please enter a anthor username' }, { status: 400 });
 
             const passowrd = await bcrypt.hash(validation.data.password, 10)
             const newUser = await prisma.users.create({
@@ -45,7 +43,6 @@ export async function POST(req: NextRequest) {
                 }
             })
 
-
             const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET as string);
             cookies().set({
                 name: 'token_auth',
@@ -53,12 +50,12 @@ export async function POST(req: NextRequest) {
                 httpOnly: true,
                 maxAge: 5454512,
             })
-            return NextResponse.json({ message: 'Successfully sign up!!' });
+            return NextResponse.json({ message: 'Successfully sign up!!' }, { status: 201 });
 
         } else {
-            return NextResponse.json({ validation: validation.error.errors })
+            return NextResponse.json({ message: validation.error.errors }, { status: 400 })
         }
     } catch (error) {
-        return NextResponse.json({ error, message: 'There is error in server', status: 400 });
+        return NextResponse.json({ error, message: 'There is error in server', }, { status: 400 });
     }
 }

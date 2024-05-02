@@ -12,7 +12,7 @@ const UserIcon = () => {
     return (
         <div className='h-fit w-full relative'>
             {user?.name ?
-                <Link href={`/profile/${user.id}`} className='w-full h-full flex justify-center py-2 '>
+                <Link href={`/profile/${user.id}`} className='w-full h-full block px-3 xl:pl-3 py-2 '>
                     <div className='flex items-center gap-3 '>
                         <div>
                             {user.picture ?

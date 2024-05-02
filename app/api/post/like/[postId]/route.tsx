@@ -25,6 +25,7 @@ export async function GET(req: NextRequest, { params }: { params: Params }) {
                 }), prisma.postLike.findMany({
                     where: {
                         postId: postId,
+                        userId: { not: verify.id }
                     }, take: 3,
                     select: {
                         user: {

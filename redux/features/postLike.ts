@@ -35,9 +35,18 @@ const postLikeSlice = createSlice({
         setLikes(state, action: PayloadAction<Partial<LikeInterFace>>) {
             return { ...state, ...action.payload }
         },
-        addLike: (state) => { }
+        addLikePost(state) {
+            const isLike = state.isLike
+            if (isLike) {
+                state.isLike = false
+                state.count -= 1
+            } else {
+                state.isLike = true
+                state.count += 1
+            }
+        }
     }
 })
 
-export const { setLikes, addLike } = postLikeSlice.actions;
+export const { setLikes, addLikePost } = postLikeSlice.actions;
 export default postLikeSlice.reducer;

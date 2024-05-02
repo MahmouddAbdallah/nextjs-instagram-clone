@@ -2,7 +2,10 @@
 import ErrorMsg from '@/app/components/ErrorMsg';
 import clsx from 'clsx';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import { LuLoader2 } from "react-icons/lu";
+import { useState } from 'react';
+import { toast } from 'react-hot-toast'
 type dataForm = {
     email: string,
     name: string,
@@ -12,15 +15,21 @@ type dataForm = {
 const FormData = () => {
     const { register, handleSubmit, formState: { errors, isValid } } = useForm<dataForm>();
     const router = useRouter();
+    const [loading, setLoading] = useState(false)
+
     const onSubmit = handleSubmit(async (formData) => {
         try {
+            setLoading(true)
             await fetch(`http://localhost:3000/api/auth/sign-in`, {
                 method: "POST",
                 body: JSON.stringify(formData),
             })
             router.push('/')
+            setLoading(false)
             window.location.reload();
-        } catch (error) {
+        } catch (error: any) {
+            toast.error(error?.response?.data?.message || 'There is an Error')
+            setLoading(false)
             console.error({ error });
         }
     })
@@ -59,7 +68,7 @@ const FormData = () => {
             </div>
             <div className='pt-5'>
                 <button disabled={!isValid} className='bg-blue-600 disabled:bg-blue-400 w-full text-xs py-2 rounded mt-5 text-white font-semibold'>
-                    Log in
+                    {loading ? <LuLoader2 className='animate-spin w-3 h-3' /> : "Log in"}
                 </button>
             </div>
         </form>

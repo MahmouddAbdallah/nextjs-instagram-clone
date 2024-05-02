@@ -57,7 +57,7 @@ const ViewPost = (
                         </div>
                     </div>
                 </div>
-                <div className="col-span-12 md:col-span-5 overflow-y-auto">
+                <div className="col-span-12 md:col-span-5 overflow-y-hidden">
                     <div className='flex flex-col justify-between h-full'>
                         <PostUserHeader
                             className='hidden md:flex'
