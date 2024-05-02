@@ -8,6 +8,7 @@ import { useAppSelector } from '@/app/hooks/reduxHooks';
 import axios from 'axios'
 import { useParams } from 'next/navigation'
 import FollowBtn from './FollowBtn';
+import clsx from 'clsx';
 
 const ProfileHeader = () => {
     const { userId } = useParams()
@@ -61,7 +62,11 @@ const ProfileHeader = () => {
                             </div>
                             :
                             <div className='w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 bg-slate-100 rounded-full overflow-hidden relative flex justify-center items-center border border-black/20'>
-                                <div className='bg-red-400 text-4xl flex justify-center items-center text-white w-full h-full'>
+                                <div className={clsx(
+                                    'text-4xl flex justify-center items-center text-white w-full h-full',
+                                    { "bg-red-400": user?.name },
+                                    { "bg-slate-200 animate-pulse": user?.name }
+                                )}>
                                     <span>
                                         {user?.name?.split("")[0]?.toUpperCase()}
                                     </span>

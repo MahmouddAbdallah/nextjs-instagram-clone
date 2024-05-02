@@ -2,7 +2,6 @@
 'use client'
 import useClickOutside from '@/app/hooks/useClickOutside'
 import { commentType } from '@/app/types/user'
-import Image from 'next/image'
 import { useCallback, useEffect, useRef } from 'react';
 import Comment from './Comment';
 import PostUserHeader from './PostUserHeader';

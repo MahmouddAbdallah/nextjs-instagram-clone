@@ -106,7 +106,7 @@ const FormData = () => {
                         By signing up, you agree to our Terms , Privacy Policy and Cookies Policy .
                     </p>
                 </div>
-                <button disabled={!isValid} className='bg-blue-600 disabled:bg-blue-400 w-full text-xs py-2 rounded mt-5 text-white font-semibold'>
+                <button disabled={!isValid} className='bg-blue-600 disabled:bg-blue-400 w-full text-xs py-2 rounded mt-5 text-white font-semibold flex justify-center'>
                     {loading ? <LuLoader2 className='animate-spin w-3 h-3' /> : "Sign up"}
                 </button>
             </div>

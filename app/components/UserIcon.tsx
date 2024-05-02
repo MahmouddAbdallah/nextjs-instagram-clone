@@ -61,7 +61,10 @@ const UserIcon = () => {
                     </div>
                 </Link>
                 :
-                <div className='bg-slate-200 animate-pulse font-semibold rounded-full w-6 h-6' />
+                <div className=" xl:pl-3 px-3 flex gap-2">
+                    <div className='bg-slate-200 animate-pulse font-semibold rounded-full w-6 h-6' />
+                    <div className="hidden xl:w-32 bg-slate-200 animate-pulse h-1 rounded-full" />
+                </div>
             }
         </div>
     )

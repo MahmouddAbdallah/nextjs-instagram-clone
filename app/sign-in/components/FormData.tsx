@@ -67,7 +67,7 @@ const FormData = () => {
                 </div>
             </div>
             <div className='pt-5'>
-                <button disabled={!isValid} className='bg-blue-600 disabled:bg-blue-400 w-full text-xs py-2 rounded mt-5 text-white font-semibold'>
+                <button disabled={!isValid} className='bg-blue-600 disabled:bg-blue-400 w-full text-xs py-2 rounded mt-5 text-white font-semibold flex justify-center'>
                     {loading ? <LuLoader2 className='animate-spin w-3 h-3' /> : "Log in"}
                 </button>
             </div>
