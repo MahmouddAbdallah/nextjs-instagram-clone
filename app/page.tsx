@@ -2,7 +2,7 @@ import React from 'react'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import Sidebar from './components/Sidebar'
-import type { Metadata } from "next";
+import HomePosts from './components/HomePosts';
 
 
 const Home = () => {
@@ -14,8 +14,8 @@ const Home = () => {
         <div>
             <div className='flex'>
                 <Sidebar />
-                <div>
-                    Home
+                <div className="flex-1">
+                    <HomePosts />
                 </div>
             </div>
         </div>

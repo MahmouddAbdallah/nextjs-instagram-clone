@@ -9,6 +9,7 @@ import axios from 'axios'
 import { useParams } from 'next/navigation'
 import FollowBtn from './FollowBtn';
 import clsx from 'clsx';
+import { toast } from 'react-hot-toast';
 
 const ProfileHeader = () => {
     const { userId } = useParams()
@@ -18,11 +19,16 @@ const ProfileHeader = () => {
     const [followerNum, setFollowerNum] = useState(0)
     const userInfo = useCallback(
         async () => {
-            const { data } = await axios.get(`http://localhost:3000/api/user/user-info?userId=${userId}`)
-            setUser(data.user)
-            setPostsNum(data.postNumber)
-            setFollowingNum(data.followingNumber)
-            setFollowerNum(data.followerNumber)
+            try {
+                const { data } = await axios.get(`http://localhost:3000/api/user/user-info?userId=${userId}`)
+                setUser(data.user)
+                setPostsNum(data.postNumber)
+                setFollowingNum(data.followingNumber)
+                setFollowerNum(data.followerNumber)
+            } catch (error: any) {
+                toast.error(error?.response?.data?.message || 'There is an Error')
+                console.error({ error });
+            }
         }, [userId]
     )
     useEffect(() => {
@@ -65,7 +71,7 @@ const ProfileHeader = () => {
                                 <div className={clsx(
                                     'text-4xl flex justify-center items-center text-white w-full h-full',
                                     { "bg-red-400": user?.name },
-                                    { "bg-slate-200 animate-pulse": user?.name }
+                                    { "bg-slate-200 animate-pulse": !user?.name }
                                 )}>
                                     <span>
                                         {user?.name?.split("")[0]?.toUpperCase()}

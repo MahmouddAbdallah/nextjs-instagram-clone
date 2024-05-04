@@ -12,14 +12,14 @@ const UserIcon = () => {
     return (
         <div className='h-fit w-full relative'>
             {user?.name ?
-                <Link href={`/profile/${user.id}`} className='w-full h-full block px-3 xl:pl-3 py-2 '>
+                <Link href={`/profile/${user.id}`} className='w-full h-full flex justify-center sm:justify-normal px-3 xl:pl-3 py-2 '>
                     <div className='flex items-center gap-3 '>
                         <div>
                             {user.picture ?
                                 <div className={clsx(
                                     'w-6 h-6 overflow-hidden rounded-full flex justify-center items-center',
                                     {
-                                        'border-2 border-black': pathname?.includes('profile')
+                                        'border-2 border-black': pathname?.includes(user.id)
                                     }
                                 )}>
                                     <Image
@@ -34,7 +34,7 @@ const UserIcon = () => {
                                 <div className={clsx(
                                     'bg-red-400 text-xs flex justify-center items-center text-white font-semibold rounded-full w-6 h-6 border',
                                     {
-                                        'border-2 border-black/70': pathname?.includes('profile')
+                                        'border-2 border-black/70': pathname?.includes(user.id)
                                     }
                                 )}>
                                     <span>
@@ -53,7 +53,7 @@ const UserIcon = () => {
                             {clsx(
                                 'text-sm text-black/80 hidden xl:block',
                                 {
-                                    'font-bold': pathname?.includes('profile')
+                                    'font-bold': pathname?.includes(user.id)
                                 }
                             )}>
                             Profile
@@ -61,9 +61,9 @@ const UserIcon = () => {
                     </div>
                 </Link>
                 :
-                <div className=" xl:pl-3 px-3 flex gap-2">
+                <div className=" xl:pl-3 px-3 flex items-center gap-2 xl:mt-2">
                     <div className='bg-slate-200 animate-pulse font-semibold rounded-full w-6 h-6' />
-                    <div className="hidden xl:w-32 bg-slate-200 animate-pulse h-1 rounded-full" />
+                    <div className="hidden xl:block h-3 xl:w-20 bg-slate-200 animate-pulse rounded-full" />
                 </div>
             }
         </div>

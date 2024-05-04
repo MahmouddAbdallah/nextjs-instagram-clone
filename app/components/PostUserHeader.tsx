@@ -1,17 +1,20 @@
 import Image from 'next/image'
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import Link from 'next/link';
+
 
 interface props {
     picture: string,
     username: string,
-    className: string
+    className?: string,
+    userId?: string
 }
 
-const PostUserHeader: React.FC<props> = ({ picture, username, className }) => {
+const PostUserHeader: React.FC<props> = ({ picture, username, className, userId }) => {
 
     return (
         <div className={`px-2 py-2 ${className} justify-between items-center border-b`}>
-            <div className='flex items-center gap-2'>
+            <Link href={`/profile/${userId}`} className='flex items-center gap-2'>
                 {
                     picture ?
                         <Image
@@ -25,7 +28,7 @@ const PostUserHeader: React.FC<props> = ({ picture, username, className }) => {
                 <span className='text-sm font-semibold'>
                     {username}
                 </span>
-            </div>
+            </Link>
             <button>
                 <HiOutlineDotsHorizontal size={18} />
             </button>

@@ -1,5 +1,4 @@
 'use client';
-import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { MdOutlineExplore, MdExplore, MdOutlineSearch } from "react-icons/md";
 import { GoHome, GoHomeFill } from "react-icons/go";
@@ -11,11 +10,10 @@ import UserIcon from './UserIcon';
 import { InstagramIcon } from './icons'
 import { FaInstagram } from "react-icons/fa";
 import Search from './Search';
-import useClickOutside from '../hooks/useClickOutside';
+import MoreSettings from './MoreSettings';
 
 const Sidebar = () => {
     const pathname = usePathname();
-    const [open, setOpen] = useState(false)
     const navItems = [
         {
             name: 'Home',
@@ -35,14 +33,13 @@ const Sidebar = () => {
         },
         {
             name: 'Messages',
-            icon: pathname === '/messages' ? < BsFillSendFill className='stroke-[.5px]' size={21} /> : <BsSend className='stroke-[.5px]' size={21} />,
+            icon: pathname === '/messages' ? < BsFillSendFill className='stroke-[.2px]' size={21} /> : <BsSend className='stroke-[.2px]' size={21} />,
             href: "/messages"
         },
     ]
-    const refElement = useClickOutside(() => { setOpen(false); })
 
     return (
-        <div ref={refElement} className='border border-black/20 bg-white fixed sm:sticky z-[999] sm:top-0 w-full sm:w-fit sm:h-screen bottom-0 left-0 xl:pl-4 px-3 py-2 sm:py-0'>
+        <div className='border border-black/20 bg-white fixed sm:sticky z-50 sm:top-0 w-full sm:w-fit sm:h-screen bottom-0 left-0 xl:pl-4 px-3 py-2 sm:py-0'>
             <div className="relative h-full">
                 <div className='flex flex-col justify-between h-full sm:pb-10'>
                     <div>
@@ -66,25 +63,9 @@ const Sidebar = () => {
                                                 <CreatePost />
                                                 :
                                                 nav.name == "Search" ?
-                                                    <div ref={refElement}>
-                                                        <button
-                                                            onClick={() => setOpen(!open)}
-                                                            className='block py-2 sm:py-3 hover:bg-black/5 px-3 xl:pl-3 xl:w-56 rounded-lg'>
-                                                            <div className='flex items-center gap-3'>
-                                                                <div>
-                                                                    <MdOutlineSearch size={24} />
-                                                                </div>
-                                                                <span className={clsx(
-                                                                    'text-sm text-black/80 hidden xl:block',
-                                                                )}>
-                                                                    Search
-                                                                </span>
-                                                            </div>
-                                                        </button>
-                                                    </div>
+                                                    <Search />
                                                     :
                                                     <Link
-                                                        onClick={() => setOpen(false)}
                                                         href={nav.href ? nav.href : "/"} className='block py-2 sm:py-3 hover:bg-black/5 px-3 xl:pl-3 xl:w-56 rounded-lg'>
                                                         <div className='flex items-center gap-3'>
                                                             <div>
@@ -102,15 +83,15 @@ const Sidebar = () => {
                                     </li>
                                 )
                             }
+                            <li className='h-fit w-full relative flex justify-center sm:justify-normal '>
+                                <UserIcon />
+                            </li>
                         </ul>
                     </div>
-                    <div className='block'>
-                        <div className=''>
-                            <UserIcon />
-                        </div>
+                    <div>
+                        <MoreSettings />
                     </div>
                 </div>
-                {open && <Search />}
             </div>
         </div>
     )

@@ -29,3 +29,17 @@ export const TagIcon: React.FC<IconsProps> = ({ className }) => {
         </svg>
     )
 }
+export const HeartIcon: React.FC<IconsProps> = ({ className }) => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" className={className} width="64" height="56" viewBox="0 0 64 56" fill="none">
+            <path d="M46.1333 0C40.1333 0 35.6 2.4 32 7.46667C28.4 2.53333 23.8667 0.133334 17.8667 0.133334C8 1.88748e-07 0 8.66667 0 19.3333C0 29.0667 7.2 35.3333 14.1333 41.3333C14.9333 42 15.8667 42.8 16.6667 43.6L19.7333 46.2667C25.6 51.4667 28.5333 54.1333 29.8667 54.9333C30.5333 55.3333 31.3333 55.6 32 55.6C32.6667 55.6 33.4667 55.3333 34.1333 54.9333C35.4667 54.1333 37.8667 52 44.5333 45.8667L47.2 43.4667C48.1333 42.6667 48.9333 41.8667 49.8667 41.2C56.9333 35.3333 64 29.2 64 19.3333C64 8.66667 56 0 46.1333 0Z" fill="url(#paint0_linear_13_3)" />
+            <defs>
+                <linearGradient id="paint0_linear_13_3" x1="-2.37078" y1="-0.747505" x2="50.0549" y2="35.9614" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#FF7A00" />
+                    <stop offset="0.4" stopColor="#FF0169" />
+                    <stop offset="1" stopColor="#D300C5" />
+                </linearGradient>
+            </defs>
+        </svg>
+    )
+}

@@ -12,11 +12,12 @@ export async function PUT(req: NextRequest) {
 
             // Checking the user is like of this post or not
             const like = await prisma.postLike.findFirst({ where: { postId: postId, userId: verify.id } })
+
             if (like) {
                 await prisma.postLike.delete({ where: { id: like.id } })
                 return NextResponse.json({ message: 'Unliked Successfully', userId: verify.id })
             } else {
-                await prisma.postLike.create({
+                const create = await prisma.postLike.create({
                     data: {
                         postId,
                         userId: verify.id

@@ -75,7 +75,7 @@ const UploadImg = () => {
                 className='w-full h-full flex justify-center items-center group hover:bg-black/10 rounded-full'>
                 <FaCamera size={25} className='invisible group-hover:visible fill-black/70' />
             </button>
-            <div className={`fixed h-full w-full top-0 left-0 bg-black/20 flex justify-center items-center ${open ? 'flex' : 'hidden'}`}>
+            <div className={`fixed h-full w-full top-0 left-0 px-5 bg-black/20 flex justify-center items-center ${open ? 'flex' : 'hidden'}`}>
                 <div onClick={() => {
                     if (loading)
                         return
@@ -118,7 +118,7 @@ const UploadImg = () => {
                                 </button>
                             </div>
                         </div>
-                        : <div className='bg-white z-50 rounded-md'>
+                        : <div className='bg-white z-50 rounded-md w-full sm:w-96'>
                             <div className='px-10 py-5'>
                                 <span className='text-lg'>
                                     Change Profile Photo

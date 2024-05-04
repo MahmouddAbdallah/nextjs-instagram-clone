@@ -21,6 +21,7 @@ const CreatePost = () => {
         setOpen(!open)
         setImage('');
         setImageFile({});
+        document.body.style.overflowY = 'auto'
         URL.revokeObjectURL(image)
     }
 
@@ -64,6 +65,7 @@ const CreatePost = () => {
             <button
                 onClick={() => {
                     setOpen(!open)
+                    document.body.style.overflowY = 'hidden'
                     setWarn(false)
                 }}
                 className='block py-2 sm:py-3 hover:bg-black/5 px-3 xl:pl-3 xl:w-48 rounded-lg'

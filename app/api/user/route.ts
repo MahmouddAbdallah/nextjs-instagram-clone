@@ -12,6 +12,7 @@ export const GET = async (req: Request) => {
         if (keyword) {
             const users = await prisma.users.findMany({
                 where: {
+                    id: { not: verfiy.id },
                     OR: [
                         { username: { contains: keyword as string, mode: 'insensitive' } },
                         { name: { contains: keyword as string, mode: 'insensitive' } }
@@ -22,7 +23,8 @@ export const GET = async (req: Request) => {
                     name: true,
                     username: true,
                     picture: true,
-                }
+                },
+                take: 10
             })
             return NextResponse.json({ users }, { status: 200 });
         }

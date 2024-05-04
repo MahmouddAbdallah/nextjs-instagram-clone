@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { useCallback, useEffect } from "react";
 import { setLikes, addLikePost } from "@/redux/features/postLike";
 import Link from 'next/link';
+import Image from "next/image";
 
 interface props {
     postId: string
@@ -17,7 +18,7 @@ const AddPostLike: React.FC<props> = ({ postId }) => {
 
     const addLike = async () => {
         try {
-            const { data } = await axios.put('http://localhost:3000/api/post/like', {
+            await axios.put('http://localhost:3000/api/post/like', {
                 postId
             })
             dispatch(addLikePost())
@@ -58,7 +59,7 @@ const AddPostLike: React.FC<props> = ({ postId }) => {
                                         <div key={user.user.id} className="first:ml-0 -ml-1">
                                             {user.user.picture ?
                                                 <div>
-                                                    <img src={user.user.picture} className='w-5 h-5 object-cover rounded-full' alt="" />
+                                                    <Image height={50} width={50} src={user.user.picture} className='w-5 h-5 object-cover rounded-full' alt="" />
                                                 </div>
                                                 : <div className='w-5 h-5 rounded-full flex items-center justify-center bg-red-500 text-xs text-white border'>
                                                     {user?.user?.username?.split('')[0]}

@@ -31,3 +31,34 @@ body {
     text-wrap: balance;
   }
 } */
+
+.anim-heart-right{
+  animation: heart-right 1s ease-in-out forwards ;
+}
+
+@keyframes heart-right {
+  0%{
+    transform: scale(0) rotate(45deg);
+  }
+  50%{
+    transform: scale(1) rotate(0deg);
+  }
+  100%{
+    transform: translateY(-1000px);
+  }
+}
+.anim-heart-left{
+  animation: heart-left 1s ease-in-out forwards ;
+}
+
+@keyframes heart-left {
+  0%{
+    transform: scale(0) rotate(-45deg);
+  }
+  50%{
+    transform: scale(1) rotate(0deg);
+  }
+  100%{
+    transform: translateY(-1000px);
+  }
+}
