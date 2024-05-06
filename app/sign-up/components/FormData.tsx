@@ -21,7 +21,7 @@ const FormData = () => {
     const onSubmit = handleSubmit(async (formData) => {
         try {
             setLoading(true);
-            const res = await fetch(`http://localhost:3000/api/auth/sign-up`, {
+            const res = await fetch(`/api/auth/sign-up`, {
                 method: "POST",
                 body: JSON.stringify(formData),
             })
