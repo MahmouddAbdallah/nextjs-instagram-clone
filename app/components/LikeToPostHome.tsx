@@ -14,7 +14,7 @@ const LikeToPostHome: React.FC<propsInterface> = ({ isLike, setIsLike, count, se
 
     const addLike = async () => {
         try {
-            await axios.put('http://localhost:3000/api/post/like', {
+            await axios.put('/api/post/like', {
                 postId
             })
             setIsLike(!isLike)

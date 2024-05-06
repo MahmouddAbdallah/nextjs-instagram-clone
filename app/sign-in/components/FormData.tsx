@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { LuLoader2 } from "react-icons/lu";
 import { useState } from 'react';
 import { toast } from 'react-hot-toast'
+import axios from 'axios';
 
 type dataForm = {
     email: string,
@@ -21,12 +22,10 @@ const FormData = () => {
     const onSubmit = handleSubmit(async (formData) => {
         try {
             setLoading(true)
-            await fetch(`/api/auth/sign-in`, {
-                method: "POST",
-                body: JSON.stringify(formData),
-            })
+            const { data } = await axios.post(`/api/auth/sign-in`, { ...formData })
             router.push('/')
             setLoading(false)
+            toast.success(data.message)
             window.location.reload();
         } catch (error: any) {
             toast.error(error?.response?.data?.message || 'There is an Error')
@@ -40,6 +39,7 @@ const FormData = () => {
             <div className='space-y-3'>
                 <div>
                     <input
+                        type="email"
                         className={clsx(
                             'w-full border rounded bg-gray-50 px-1 py-2 outline-none text-xs focus:border-black/30 placeholder:text-xs',
                             {
@@ -47,7 +47,6 @@ const FormData = () => {
                             }
                         )}
                         placeholder='Email'
-                        type="email"
                         {...register('email', { required: 'Email is required.' })}
                     />
                     <ErrorMsg message={errors.email?.message as string} />

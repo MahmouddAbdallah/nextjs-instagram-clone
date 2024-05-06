@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     icon: "./icon.png"
   }
 };
+axios.defaults.baseURL = "http://localhost:3000"
 
 export default async function RootLayout({ children, }: { children: React.ReactNode }) {
 

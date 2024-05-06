@@ -14,7 +14,7 @@ const AddComment: React.FC<propsAddComment> = ({ postId }) => {
     const dispatch = useAppDispatch()
     const onSubmit = handleSubmit(async (formData) => {
         try {
-            const { data } = await axios.post('http://localhost:3000/api/comment',
+            const { data } = await axios.post('/api/comment',
                 {
                     text: formData.text,
                     postId: postId

@@ -14,7 +14,7 @@ const AppContextProvider = ({ children }: {
     const getUser = useCallback(
         async () => {
             try {
-                const { data } = await axios.get(`http://localhost:3000/api/user/verfily-user`)
+                const { data } = await axios.get(`/api/user/verfily-user`)
                 dispatch(setUserData(data.user))
             } catch (error) {
                 console.error(error);

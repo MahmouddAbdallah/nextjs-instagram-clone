@@ -54,7 +54,7 @@ const UploadImg = () => {
             setLoading(true);
             const formData = new FormData();
             formData.append('picture', imageFile)
-            const res = await fetch('http://localhost:3000/api/user/photo', {
+            const res = await fetch('/api/user/photo', {
                 method: 'PUT',
                 body: formData,
                 cache: 'reload'

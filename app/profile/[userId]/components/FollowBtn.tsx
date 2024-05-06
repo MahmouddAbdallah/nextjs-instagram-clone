@@ -13,7 +13,7 @@ const FollowBtn = () => {
     const handleFoller = async () => {
         try {
             seLoading(true)
-            const { data } = await axios.post('http://localhost:3000/api/followers', {
+            const { data } = await axios.post('/api/followers', {
                 followerId: userId
             })
             setIsFollow(data.isFollow);
@@ -27,7 +27,7 @@ const FollowBtn = () => {
     const handleIsFollow = useCallback(
         async () => {
             try {
-                const { data } = await axios.get(`http://localhost:3000/api/followers/${userId}`)
+                const { data } = await axios.get(`/api/followers/${userId}`)
                 setIsFollow(data.isFollow);
             } catch (error) {
                 console.error(error);

@@ -20,7 +20,7 @@ const ProfileHeader = () => {
     const userInfo = useCallback(
         async () => {
             try {
-                const { data } = await axios.get(`http://localhost:3000/api/user/user-info?userId=${userId}`)
+                const { data } = await axios.get(`/api/user/user-info?userId=${userId}`)
                 setUser(data.user)
                 setPostsNum(data.postNumber)
                 setFollowingNum(data.followingNumber)

@@ -14,7 +14,7 @@ const HomePosts = () => {
 
     const fetchPosts = useCallback(async () => {
         try {
-            const { data } = await axios.get(`http://localhost:3000/api/post`)
+            const { data } = await axios.get(`/api/post`)
             dispatch(setPostsData(data))
         } catch (error) {
             console.error(error);

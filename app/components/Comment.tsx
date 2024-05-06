@@ -16,7 +16,7 @@ const Comment = () => {
 
     const addLike = async (commentId: string) => {
         try {
-            const { data } = await axios.put('http://localhost:3000/api/comment/like/', { commentId })
+            const { data } = await axios.put('/api/comment/like/', { commentId })
             dispatch(addCommentLike({ userId: data.userId, commentId: data.commentId }))
         } catch (error) {
             console.error(error);

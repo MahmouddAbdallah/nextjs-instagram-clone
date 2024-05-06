@@ -1,5 +1,6 @@
 'use client';
 import ErrorMsg from '@/app/components/ErrorMsg';
+import axios from 'axios';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -20,16 +21,12 @@ const FormData = () => {
     const [loading, setLoading] = useState(false)
     const onSubmit = handleSubmit(async (formData) => {
         try {
-            setLoading(true);
-            const res = await fetch(`/api/auth/sign-up`, {
-                method: "POST",
-                body: JSON.stringify(formData),
-            })
-            const data = await res.json();
-            console.log(data);
-            window.location.reload();
-            setLoading(false);
+            setLoading(true)
+            const { data } = await axios.post(`/api/auth/sign-in`, { ...formData })
             router.push('/')
+            setLoading(false)
+            toast.success(data.message)
+            window.location.reload();
         } catch (error: any) {
             toast.error(error?.response?.data?.message || 'There is an Error')
             setLoading(false)
@@ -42,6 +39,7 @@ const FormData = () => {
             <div className='space-y-3'>
                 <div>
                     <input
+                        type="email"
                         className={clsx(
                             'w-full border rounded bg-gray-50 px-1 py-2 outline-none text-xs focus:border-black/30 placeholder:text-xs',
                             {
@@ -49,7 +47,6 @@ const FormData = () => {
                             }
                         )}
                         placeholder='Email'
-                        type="email"
                         {...register('email', { required: 'Email is required.' })}
                     />
                     <ErrorMsg message={errors.email?.message as string} />
@@ -70,6 +67,7 @@ const FormData = () => {
                 </div>
                 <div>
                     <input
+                        placeholder='Username'
                         type="text"
                         className={clsx(
                             'w-full border rounded bg-gray-50 px-1 py-2 outline-none text-xs focus:border-black/30 placeholder:text-xs',
@@ -77,7 +75,6 @@ const FormData = () => {
                                 'border-red-500 focus:border-red-500': !!errors.name?.message
                             }
                         )}
-                        placeholder='Username'
                         {...register('username', { required: 'Username is required.' })}
                     />
                     <ErrorMsg message={errors.username?.message as string} />

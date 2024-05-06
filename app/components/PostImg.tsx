@@ -18,7 +18,7 @@ const PostImg: React.FC<propsInterface> = ({ img, postId, isLike, setIsLike, set
     const addLike = async () => {
         try {
             if (!isLike) {
-                await axios.put('http://localhost:3000/api/post/like', {
+                await axios.put('/api/post/like', {
                     postId: postId
                 })
                 setCount(count + 1)

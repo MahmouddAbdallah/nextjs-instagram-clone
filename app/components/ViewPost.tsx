@@ -23,7 +23,7 @@ const ViewPost = (
 
     const fetchComment = useCallback(
         async () => {
-            const res = await fetch(`http://localhost:3000/api/comment/${post.id}`, {
+            const res = await fetch(`/api/comment/${post.id}`, {
                 method: 'GET',
             })
             if (!res.ok) throw new Error('something went wrong')

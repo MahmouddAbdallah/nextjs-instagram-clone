@@ -12,6 +12,7 @@ const signInValidation = z.object({
 export async function POST(req: Request) {
     try {
         const body = await req.json();
+        console.log(body);
 
         const validation = signInValidation.safeParse(body);
         if (validation.success) {

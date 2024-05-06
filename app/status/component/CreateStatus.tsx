@@ -49,7 +49,7 @@ const CreateStatus = () => {
             const formData = new FormData();
             formData.append('image', imageFile as File)
             formData.append('text', text)
-            await axios.post('http://localhost:3000/api/status', formData)
+            await axios.post('/api/status', formData)
             setLoading(false)
             router.push('/')
         } catch (error: any) {

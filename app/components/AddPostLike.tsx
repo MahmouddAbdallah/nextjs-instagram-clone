@@ -18,7 +18,7 @@ const AddPostLike: React.FC<props> = ({ postId }) => {
 
     const addLike = async () => {
         try {
-            await axios.put('http://localhost:3000/api/post/like', {
+            await axios.put('/api/post/like', {
                 postId
             })
             dispatch(addLikePost())
@@ -29,7 +29,7 @@ const AddPostLike: React.FC<props> = ({ postId }) => {
     const getLikes = useCallback(
         async () => {
             try {
-                const { data } = await axios.get(`http://localhost:3000/api/post/like/${post.id}`);
+                const { data } = await axios.get(`/api/post/like/${post.id}`);
                 dispatch(setLikes(data))
             } catch (error) {
                 console.error(error);

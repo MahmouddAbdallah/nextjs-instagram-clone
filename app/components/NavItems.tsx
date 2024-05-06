@@ -49,7 +49,7 @@ const NavItems = () => {
                         :
                         nav.name == 'Search'
                             ?
-                            <li key={nav.name} className='hidden'><Search /></li>
+                            <li key={nav.name} className='hidden sm:block'><Search /></li>
                             :
                             nav.name == 'Profile'
                                 ?

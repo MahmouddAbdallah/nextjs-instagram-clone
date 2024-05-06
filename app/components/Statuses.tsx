@@ -8,7 +8,7 @@ import Image from 'next/image';
 const Statuses = async () => {
 
     const token = cookies().get('token_auth')?.value;
-    const res = await fetch('http://localhost:3000/api/status', {
+    const res = await fetch('/api/status', {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`
