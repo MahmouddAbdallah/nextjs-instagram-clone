@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import { useAppDispatch } from '../hooks/reduxHooks'
 import { addPost } from "@/redux/features/posts"
 import Image from 'next/image'
+import axios from 'axios';
 
 const CreatePost = () => {
     const [open, setOpen] = useState(false);
@@ -48,13 +49,7 @@ const CreatePost = () => {
             if (titleRef.current) {
                 formData.append('title', titleRef.current.value);
             }
-            const res = await fetch(`${process.env.BASE_URL}/api/post`, {
-                method: "POST",
-                body: formData
-            });
-            if (!res.ok) throw new Error("Could not create post");
-
-            const data = await res.json();
+            const { data } = await axios.post(`/api/post`, formData);
             dispatch(addPost(data.post))
             setLoading(false)
             removeImage();

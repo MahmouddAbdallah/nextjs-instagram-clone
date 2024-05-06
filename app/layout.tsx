@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import AppContextProvider from "./context/ContextApp";
 import StoreProvider from "@/redux/StoreProvider";
-import axios from "axios";
 import { cookies } from "next/headers";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,8 +13,6 @@ export const metadata: Metadata = {
     icon: "./icon.png"
   }
 };
-axios.defaults.baseURL = "http://localhost:3000"
-axios.defaults.withCredentials = true
 
 export default async function RootLayout({ children, }: { children: React.ReactNode }) {
 

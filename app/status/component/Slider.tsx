@@ -53,7 +53,7 @@ const Slider = ({ data }: { data: any }) => {
                     </Link>
                 </div>
                 <div className="absolute w-full top-0 z-10 py-4 px-3 flex gap-1">
-                    {data?.statuses.map((_: any, i: any) =>
+                    {data?.statuses?.map((_: any, i: any) =>
                         <div key={i} className={clsx(
                             "h-1 w-full  rounded-md  relative overflow-hidden",
                             { "bg-white/70": i > currentSlide },
@@ -63,7 +63,7 @@ const Slider = ({ data }: { data: any }) => {
                     )}
                 </div>
                 <div className='h-full w-full flex justify-center items-center'>
-                    {data?.statuses.map((item: any, i: number) =>
+                    {data?.statuses?.map((item: any, i: number) =>
                         i == currentSlide &&
                         <div key={item.id} className="w-full h-full">
                             <Image

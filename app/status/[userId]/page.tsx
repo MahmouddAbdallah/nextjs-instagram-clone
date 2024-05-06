@@ -1,24 +1,26 @@
-import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
-import { cookies } from 'next/headers';
-import React from 'react'
+'use client'
+import React, { useCallback, useEffect, useState } from 'react'
 import Slider from '../component/Slider'
 import { IoMdClose } from 'react-icons/io';
 import { InstagramIcon } from '@/app/components/icons';
 import Link from 'next/link';
+import axios from 'axios';
+import { useParams } from 'next/navigation';
 
-const page = async ({ params }: { params: Params }) => {
-    const { userId } = params
-    const token = cookies().get('token_auth')?.value;
-    const res = await fetch(`http://localhost:3000/api/status/user?userId=${userId}`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`
+const Status = () => {
+    const [data, setData] = useState({})
+    const { userId } = useParams()
+    const fetchStatuses = useCallback(async () => {
+        try {
+            const { data } = await axios.get(`/api/status/user?userId=${userId}`,);
+            setData(data)
+        } catch (error) {
+            console.error(error);
         }
-    });
-    if (!res.ok) {
-        throw new Error(await res.text());
-    }
-    const data = await res.json();
+    }, [userId])
+    useEffect(() => {
+        fetchStatuses()
+    }, [fetchStatuses])
 
     return (
         <div className="h-svh w-svh bg-black/85 relative">
@@ -37,4 +39,4 @@ const page = async ({ params }: { params: Params }) => {
     )
 }
 
-export default page
+export default Status
