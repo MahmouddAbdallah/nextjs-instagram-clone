@@ -6,8 +6,6 @@ import { useAppDispatch } from '../hooks/reduxHooks';
 import { Toaster } from 'react-hot-toast';
 
 const appContext = createContext<{} | undefined>(undefined);
-axios.defaults.baseURL = "http://localhost:3000"
-axios.defaults.withCredentials = true
 
 const AppContextProvider = ({ children }: {
     children: React.ReactNode
