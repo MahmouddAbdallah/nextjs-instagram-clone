@@ -60,7 +60,9 @@ const NavItems = () => {
                             :
                             nav.name == 'Profile'
                                 ?
-                                <li key={nav.name}>
+                                <li
+                                    className='h-fit w-full relative flex justify-center sm:justify-normal'
+                                    key={nav.name}>
                                     <UserIcon />
                                 </li>
                                 :

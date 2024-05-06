@@ -11,7 +11,7 @@ const Home = () => {
         redirect('/sign-in')
     }
     return (
-        <div>
+        <div className='sm:pt-5'>
             <Statuses />
             <HomePosts />
         </div>

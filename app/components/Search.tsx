@@ -115,6 +115,7 @@ const Search = () => {
                             return (
                                 <li key={user.id}>
                                     <Link
+                                        onClick={() => { setOpen(false); }}
                                         className="block w-full p-2 rounded-md hover:bg-black/5 duration-150"
                                         href={`/profile/${user.id}`}>
                                         <div className="w-full flex gap-2">

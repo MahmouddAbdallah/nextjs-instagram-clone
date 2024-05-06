@@ -27,7 +27,7 @@ const HomePosts = () => {
 
 
     return (
-        <div className='py-10'>
+        <div className='pb-10 sm:pt-5'>
             <div className="lg:pl-72 mx-auto lg:mx-0 max-w-[500px] lg:max-w-[750px]">
                 <ul className='w-full space-y-10'>
                     {
