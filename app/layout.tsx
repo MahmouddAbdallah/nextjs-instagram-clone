@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   }
 };
 axios.defaults.baseURL = "http://localhost:3000"
+axios.defaults.withCredentials = true
 
 export default async function RootLayout({ children, }: { children: React.ReactNode }) {
 

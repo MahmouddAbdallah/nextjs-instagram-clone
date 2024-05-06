@@ -71,7 +71,7 @@ const AddPostLike: React.FC<props> = ({ postId }) => {
                             </div>
                             <span className="text-xs">
                                 Liked by
-                                <Link className="font-medium" href={like?.users[0]?.user?.id || ""}> {like?.users[0]?.user?.username} </Link>
+                                <Link className="font-medium" href={`/profile/${like?.users[0]?.user?.id}`}> {like?.users[0]?.user?.username} </Link>
                                 and <button className="font-medium" >{like?.count} other</button>
                             </span>
                         </div> : ""

@@ -48,7 +48,7 @@ const CreatePost = () => {
             if (titleRef.current) {
                 formData.append('title', titleRef.current.value);
             }
-            const res = await fetch(`http://localhost:3000/api/post`, {
+            const res = await fetch(`${process.env.BASE_URL}/api/post`, {
                 method: "POST",
                 body: formData
             });
