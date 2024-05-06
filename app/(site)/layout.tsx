@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 
 
 export const metadata: Metadata = {
@@ -15,8 +16,11 @@ export default async function RootLayout({ children, }: { children: React.ReactN
     return (
         <div className='flex'>
             <Sidebar />
-            <div className="flex-1 py-10">
-                {children}
+            <div className="flex-1">
+                <Navbar />
+                <div className="pb-5">
+                    {children}
+                </div>
             </div>
         </div>
     );

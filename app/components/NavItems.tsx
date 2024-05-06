@@ -45,11 +45,18 @@ const NavItems = () => {
                 navItems.map(nav =>
                     nav.name == 'Create'
                         ?
-                        <li key={nav.name} className='h-fit w-full relative flex justify-center sm:justify-normal'><CreatePost /></li>
+                        <li key={nav.name} className='h-fit w-full hidden sm:block'>
+                            <CreatePost />
+                        </li>
                         :
                         nav.name == 'Search'
                             ?
-                            <li key={nav.name} className='hidden sm:block'><Search /></li>
+                            <li
+                                key={nav.name}
+                                className='h-fit w-full relative flex justify-center sm:justify-normal'
+                            >
+                                <Search />
+                            </li>
                             :
                             nav.name == 'Profile'
                                 ?

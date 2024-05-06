@@ -22,7 +22,7 @@ const FormData = () => {
     const onSubmit = handleSubmit(async (formData) => {
         try {
             setLoading(true)
-            const { data } = await axios.post(`/api/auth/sign-in`, { ...formData })
+            const { data } = await axios.post(`/api/auth/sign-up`, { ...formData })
             router.push('/')
             setLoading(false)
             toast.success(data.message)

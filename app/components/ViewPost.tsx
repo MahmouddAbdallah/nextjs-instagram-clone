@@ -39,6 +39,7 @@ const ViewPost = (
     const refElement = useClickOutside(() => {
         setOpen(false)
         dispatch(setComment([]))
+        document.body.style.overflow = 'auto'
     })
 
     return (

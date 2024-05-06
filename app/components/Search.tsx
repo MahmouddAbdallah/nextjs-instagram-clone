@@ -39,8 +39,15 @@ const Search = () => {
         }
     }, [keyword, fetchUsers])
 
-
     const refElement = useClickOutside(() => { setOpen(false); })
+
+    useEffect(() => {
+        if (window.innerWidth < 640 && open == true) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = "auto"
+        }
+    }, [open])
 
     return (
         <div ref={refElement}>
@@ -62,33 +69,45 @@ const Search = () => {
             </div>
             {
                 open &&
-                <div className="fixed sm:left-[74px] xl:left-[238px] w-80 h-full border top-0 bg-white z-[999]">
-                    <div className='w-full'>
+                <div className="fixed w-full left-0 sm:left-[74px] xl:left-[238px] sm:w-80 h-full border top-0 bg-white z-[999]">
+                    <div className='w-full hidden sm:block'>
                         <div className='py-10 px-4'>
                             <h1 className="text-xl lg:text-2xl font-semibold">Search</h1>
                         </div>
                     </div>
-                    <div className="px-4">
-                        <div className='w-full relative flex items-center'>
-                            <input
-                                type="text"
-                                placeholder='Search'
-                                value={keyword}
-                                onChange={(e) => { setKeyword(e.target.value) }}
-                                className='py-2 px-2 rounded-lg w-full border outline-none bg-black/5 placeholder:font-light'
-                            />
-                            {loading ? <div className="absolute right-2 w-4 h-4 flex items-center justify-center rounded-full">
-                                <LuLoader2 className="animate-spin" />
+                    <div className="px-4 pt-5 sm:pt-0">
+                        <div className='flex items-center gap-3'>
+                            <div className='w-full relative flex items-center'>
+                                <input
+                                    type="text"
+                                    placeholder='Search'
+                                    value={keyword}
+                                    onChange={(e) => { setKeyword(e.target.value) }}
+                                    className='py-2 px-2 rounded-lg w-full border outline-none bg-black/5 placeholder:font-light'
+                                />
+                                {
+                                    keyword ?
+                                        (loading) ?
+                                            <div className="absolute right-2 w-4 h-4 flex items-center justify-center rounded-full">
+                                                <LuLoader2 className="animate-spin" />
+                                            </div>
+                                            :
+                                            <button onClick={() => {
+                                                setKeyword("")
+                                                setUsers([])
+                                            }}
+                                                className="absolute right-2 w-4 h-4 flex items-center justify-center bg-black/10 rounded-full"
+                                            >
+                                                <IoIosClose size={20} />
+                                            </button>
+                                        : ""
+                                }
                             </div>
-                                :
-                                <button onClick={() => {
-                                    setKeyword("")
-                                    setUsers([])
-                                }}
-                                    className="absolute right-2 w-4 h-4 flex items-center justify-center bg-black/10 rounded-full"
-                                >
-                                    <IoIosClose size={20} />
-                                </button>}
+                            <button
+                                onClick={() => { setOpen(false); }}
+                                className='block sm:hidden text-sm font-medium'>
+                                Cancel
+                            </button>
                         </div>
                     </div>
                     <ul className="py-2 px-4">

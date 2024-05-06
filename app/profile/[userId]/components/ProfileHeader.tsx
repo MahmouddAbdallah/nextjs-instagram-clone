@@ -10,6 +10,7 @@ import { useParams } from 'next/navigation'
 import FollowBtn from './FollowBtn';
 import clsx from 'clsx';
 import { toast } from 'react-hot-toast';
+import NavbarPosts from './NavbarPosts';
 
 const ProfileHeader = () => {
     const { userId } = useParams()
@@ -90,12 +91,12 @@ const ProfileHeader = () => {
                     <div className='flex flex-wrap gap-5'>
                         <h3 className='text-lg font-semibold'>{user?.username}</h3>
                         {user?.id == userApp.id ?
-                            <div className='flex gap-5 items-center'>
+                            <div className='flex gap-3 sm:gap-5 items-center'>
                                 <div className='space-x-3'>
-                                    <button className='bg-black/5 rounded-md px-7 py-2 whitespace-nowrap text-xs font-semibold'>Edit profile</button>
-                                    <button className='bg-black/5 rounded-md px-7 py-2 whitespace-nowrap text-xs font-semibold'>View archive</button>
+                                    <button className='bg-black/5 rounded-md px-4 sm:px-7 py-2 whitespace-nowrap text-xs font-semibold'>Edit profile</button>
+                                    <button className='bg-black/5 rounded-md px-4 sm:px-7 py-2 whitespace-nowrap text-xs font-semibold'>View archive</button>
                                 </div>
-                                <div>
+                                <div className='hidden sm:block'>
                                     <IoIosSettings size={25} />
                                 </div>
                             </div>
@@ -135,6 +136,11 @@ const ProfileHeader = () => {
                     </div>
                 </div>
             </div>
+            <NavbarPosts
+                postsNum={postsNum}
+                followerNum={followerNum}
+                followingNum={followingNum}
+            />
         </div>
     )
 }

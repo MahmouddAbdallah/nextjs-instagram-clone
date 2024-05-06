@@ -5,7 +5,14 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 import { GiAbstract050 } from "react-icons/gi";
 
-const NavbarPosts = () => {
+
+interface props {
+    postsNum: number;
+    followerNum: number;
+    followingNum: number;
+}
+const NavbarPosts: React.FC<props> = ({ postsNum, followerNum, followingNum, }) => {
+
     const pathname = usePathname();
     const userId = pathname?.split('/')[2]
 
@@ -14,7 +21,7 @@ const NavbarPosts = () => {
             <div className='w-full flex border-t sm:hidden'>
                 <button className='w-full flex flex-col items-center text-xs py-3'>
                     <span className='font-semibold'>
-                        0
+                        {postsNum}
                     </span>
                     <span className='text-black/50'>
                         Posts
@@ -22,7 +29,7 @@ const NavbarPosts = () => {
                 </button>
                 <button className='w-full flex flex-col items-center text-xs py-3'>
                     <span className='font-semibold'>
-                        0
+                        {followerNum}
                     </span>
                     <span className='text-black/50'>
                         followers
@@ -30,7 +37,7 @@ const NavbarPosts = () => {
                 </button>
                 <button className='w-full flex flex-col items-center text-xs py-3'>
                     <span className='font-semibold'>
-                        0
+                        {followingNum}
                     </span>
                     <span className='text-black/50'>
                         following

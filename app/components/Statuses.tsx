@@ -20,7 +20,7 @@ const Statuses = async () => {
     const data = await res.json();
 
     return (
-        <div className='px-2 md:px-10 lg:pl-52'>
+        <div className='px-2 md:px-10 lg:pl-52 border-b-2 sm:border-b-0 py-2'>
             <ul className='flex gap-2 lg:gap-3 max-w-[650px] overflow-x-auto hide-scrollbar'>
                 <li>
                     <UserStatus />

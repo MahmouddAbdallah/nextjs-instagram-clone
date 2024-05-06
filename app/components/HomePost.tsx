@@ -17,6 +17,7 @@ const HomePost = ({ post }: { post: any }) => {
     const viewPost = () => {
         setOpenViewPost(true)
         dispatch(setPostData(post as postType))
+        document.body.style.overflow = 'hidden'
     }
     return (
         <div>

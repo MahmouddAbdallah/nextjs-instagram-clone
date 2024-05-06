@@ -13,6 +13,8 @@ const Post = ({ post }: { post: postType }) => {
     const viewPost = () => {
         setOpen(true)
         dispatch(setPostData(post as postType))
+        document.body.style.overflow = 'hidden'
+
     }
     return (
         <div className="col-span-4 border relative group">
