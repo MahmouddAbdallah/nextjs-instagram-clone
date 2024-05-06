@@ -6,7 +6,7 @@ const Profile = async ({ params }: { params: Params }) => {
     const { userId } = params
     const fetchUserPosts = async () => {
         try {
-            const res = await fetch(`/api/post/user/${userId}`, {
+            const res = await fetch(`${process.env.BASE_URL}/api/post/user/${userId}`, {
                 method: "GET",
                 credentials: 'include',
                 cache: 'no-cache'
