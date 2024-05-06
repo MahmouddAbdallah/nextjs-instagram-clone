@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { LuLoader2 } from "react-icons/lu";
 import { useState } from 'react';
 import { toast } from 'react-hot-toast'
+
 type dataForm = {
     email: string,
     name: string,

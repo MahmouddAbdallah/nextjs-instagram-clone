@@ -1,8 +1,8 @@
 import React from 'react'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import Sidebar from './components/Sidebar'
-import HomePosts from './components/HomePosts';
+import HomePosts from '../components/HomePosts';
+import Statuses from '../components/Statuses';
 
 
 const Home = () => {
@@ -12,12 +12,8 @@ const Home = () => {
     }
     return (
         <div>
-            <div className='flex'>
-                <Sidebar />
-                <div className="flex-1">
-                    <HomePosts />
-                </div>
-            </div>
+            <Statuses />
+            <HomePosts />
         </div>
     )
 }

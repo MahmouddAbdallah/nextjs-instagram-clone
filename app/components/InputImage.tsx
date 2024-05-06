@@ -34,8 +34,6 @@ const InputImage: React.FC<inputImageProps> = ({ setImageFile, image, setImage }
         }
     }
 
-    console.log(image);
-
     return (
         <div>
             <div className='py-3 h-80 sm:h-96 lg:h-[500px] flex justify-center items-center'>

@@ -23,7 +23,9 @@ const PostUserHeader: React.FC<props> = ({ picture, username, className, userId 
                             className="object-cover w-8 h-8 rounded-full"
                             src={picture as string}
                             alt=""
-                        /> : "..."
+                        /> : <div className="w-8 h-8 rounded-full bg-red-400 uppercase flex items-center justify-center text-xs font-medium text-white">
+                            {username?.split("")[0]}
+                        </div>
                 }
                 <span className='text-sm font-semibold'>
                     {username}

@@ -12,12 +12,13 @@ interface propsInterface {
     count: number
 }
 const PostImg: React.FC<propsInterface> = ({ img, postId, isLike, setIsLike, setCount, count }) => {
-    const [firstClick, setFirstClick] = useState(false)
-    const [heart, setHeart] = useState(true)
+    const [firstClick, setFirstClick] = useState(false);
+    const [heart, setHeart] = useState(true);
+
     const addLike = async () => {
         try {
             if (!isLike) {
-                const { data } = await axios.put('http://localhost:3000/api/post/like', {
+                await axios.put('http://localhost:3000/api/post/like', {
                     postId: postId
                 })
                 setCount(count + 1)
@@ -28,17 +29,16 @@ const PostImg: React.FC<propsInterface> = ({ img, postId, isLike, setIsLike, set
         }
     }
 
-    console.log({ isLike });
     return (
         <button
             onClick={() => {
-                if (!isLike && heart) {
+                if (!isLike && !heart) {
                     addLike()
                 }
                 setHeart(!heart)
                 setFirstClick(heart ? false : true)
             }}
-            className="border relative flex items-center justify-center overflow-hidden">
+            className="border relative flex items-center justify-center overflow-hidden cursor-default">
             <Image
                 height={500}
                 width={500}
@@ -48,7 +48,7 @@ const PostImg: React.FC<propsInterface> = ({ img, postId, isLike, setIsLike, set
             />
             <div className='absolute'>
                 {firstClick && <HeartIcon className={clsx(
-                    'h-28 w-28',
+                    'h-36 w-36',
                     { 'block anim-heart-right': heart },
                 )} />}
             </div>

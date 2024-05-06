@@ -19,7 +19,7 @@ export default function RootLayout({
         <div className='lg:flex justify-center'>
             <div className='lg:w-[900px]'>
                 <div className="sm:px-3">
-                    <UserInfo params={params} />
+                    <UserInfo />
                     {children}
                 </div>
             </div>

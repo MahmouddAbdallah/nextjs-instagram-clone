@@ -1,29 +1,34 @@
 'use client'
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import PostUserHeader from './PostUserHeader';
-import Image from 'next/image'
-import LikeToPostHome from './LikeToPostHome';
+import { useEffect, useCallback } from 'react';
 import { IoIosHeart } from "react-icons/io";
 import HomePost from './HomePost';
+import { CommentIcon } from './icons';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
+import { setPostsData } from '@/redux/features/posts';
 
 const HomePosts = () => {
-    const [posts, setPosts] = useState([])
-    const fetchPosts = async () => {
+    const posts = useAppSelector(state => state.posts.posts)
+
+    const dispatch = useAppDispatch()
+
+    const fetchPosts = useCallback(async () => {
         try {
             const { data } = await axios.get(`http://localhost:3000/api/post`)
-            setPosts(data.posts);
+            dispatch(setPostsData(data))
         } catch (error) {
             console.error(error);
         }
-    }
+    }, [dispatch]);
+
     useEffect(() => {
         fetchPosts()
-    }, [])
+    }, [fetchPosts])
+
 
     return (
-        <div className='py-20'>
-            <div className="lg:pl-72 max-w-[750px]">
+        <div className='py-10'>
+            <div className="lg:pl-72 mx-auto lg:mx-0 max-w-[500px] lg:max-w-[750px]">
                 <ul className='w-full space-y-10'>
                     {
                         posts.length ?
@@ -45,8 +50,9 @@ const HomePosts = () => {
                                         </div>
                                     </div>
                                     <div className='h-96 bg-slate-100 animate-pulse' />
-                                    <div className="mt-2">
+                                    <div className="mt-2 flex gap-3">
                                         <IoIosHeart className="w-7 h-7 fill-slate-100 animate-pulse" />
+                                        <CommentIcon className="w-6 h-6 fill-slate-100 stroke-slate-100 animate-pulse" />
                                     </div>
                                     <div className='h-10 w-full p-2 bg-slate-100 animate-pulse mt-2' >
                                         <div className="bg-white h-2 rounded-full mb-2" />

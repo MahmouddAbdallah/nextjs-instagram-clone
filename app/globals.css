@@ -38,7 +38,7 @@ body {
 
 @keyframes heart-right {
   0%{
-    transform: scale(0) rotate(45deg);
+    transform: scale(.2) rotate(30deg);
   }
   50%{
     transform: scale(1) rotate(0deg);
@@ -46,19 +46,33 @@ body {
   100%{
     transform: translateY(-1000px);
   }
-}
-.anim-heart-left{
-  animation: heart-left 1s ease-in-out forwards ;
 }
 
-@keyframes heart-left {
+.gradient-status{
+  background-image: linear-gradient(to right top, #ffcb1c, #ffb319, #ff9b21, #ff822d, #ff6938, #ff5445, #ff3c54, #ff1c64, #fd007a, #f60092, #e800ab, #d300c5);
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;  
+}
+.active-status::before{
+  content: "";
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background: white;
+  animation:active-status-anim  10s infinite ease-in forwards;
+}
+
+@keyframes active-status-anim {
   0%{
-    transform: scale(0) rotate(-45deg);
-  }
-  50%{
-    transform: scale(1) rotate(0deg);
+    right: 100%;
   }
   100%{
-    transform: translateY(-1000px);
+    right: 0px;
   }
 }

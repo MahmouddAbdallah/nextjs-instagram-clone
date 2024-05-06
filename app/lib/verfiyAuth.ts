@@ -18,6 +18,7 @@ export const verifyAuth = async (token?: string) => {
                         name: true,
                         email: true,
                         picture: true,
+                        username: true
                     }
                 })
                 if (!user) return false
@@ -38,6 +39,7 @@ export const verifyAuth = async (token?: string) => {
                         name: true,
                         email: true,
                         picture: true,
+                        username: true
                     }
                 })
                 if (!user) return false

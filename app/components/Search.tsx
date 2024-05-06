@@ -62,7 +62,7 @@ const Search = () => {
             </div>
             {
                 open &&
-                <div className="fixed sm:left-[74px] lg:left-[238px] w-80 h-full border top-0 bg-white z-[999]">
+                <div className="fixed sm:left-[74px] xl:left-[238px] w-80 h-full border top-0 bg-white z-[999]">
                     <div className='w-full'>
                         <div className='py-10 px-4'>
                             <h1 className="text-xl lg:text-2xl font-semibold">Search</h1>
@@ -101,13 +101,19 @@ const Search = () => {
                                         <div className="w-full flex gap-2">
                                             <div>
                                                 <div>
-                                                    <Image
-                                                        src={user.picture}
-                                                        alt={user.name}
-                                                        height={100}
-                                                        width={100}
-                                                        className="rounded-full object-cover w-11 h-11"
-                                                    />
+                                                    {user.picture ?
+                                                        <Image
+                                                            height={100}
+                                                            width={100}
+                                                            className="rounded-full object-cover w-11 h-11"
+                                                            src={user.picture as string}
+                                                            alt={user.name}
+                                                        />
+                                                        :
+                                                        <div className="w-11 h-11 rounded-full bg-red-400 uppercase flex items-center justify-center text-xl font-medium text-white">
+                                                            {user?.username?.split("")[0]}
+                                                        </div>
+                                                    }
                                                 </div>
                                             </div>
                                             <div className=''>

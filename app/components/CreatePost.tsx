@@ -1,13 +1,14 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
 import { useRef, useState } from 'react'
 import { IoMdClose } from "react-icons/io";
 import useClickOutside from '../hooks/useClickOutside';
 import InputImage from './InputImage';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { MdOutlineSearch, MdOutlineExplore, MdExplore, MdAddCircle, MdAddCircleOutline } from "react-icons/md";
+import { MdAddCircleOutline } from "react-icons/md";
 import clsx from 'clsx';
-
+import { useAppDispatch } from '../hooks/reduxHooks'
+import { addPost } from "@/redux/features/posts"
+import Image from 'next/image'
 
 const CreatePost = () => {
     const [open, setOpen] = useState(false);
@@ -16,6 +17,8 @@ const CreatePost = () => {
     const [image, setImage] = useState('' as string);
     const [imageFile, setImageFile] = useState({} as object);
     const titleRef = useRef<HTMLTextAreaElement | null>(null)
+    const dispatch = useAppDispatch();
+
 
     const removeImage = () => {
         setOpen(!open)
@@ -39,6 +42,7 @@ const CreatePost = () => {
             e.preventDefault();
             setOpen(!open)
             setLoading(true)
+            document.body.style.overflowY = 'auto'
             const formData = new FormData();
             formData.append('image', imageFile as File);
             if (titleRef.current) {
@@ -51,17 +55,16 @@ const CreatePost = () => {
             if (!res.ok) throw new Error("Could not create post");
 
             const data = await res.json();
-            console.log(data);
+            dispatch(addPost(data.post))
             setLoading(false)
             removeImage();
-            window.location.reload()
         } catch (error) {
             console.error(error);
         }
     }
-    return (
-        <>
 
+    return (
+        <div>
             <button
                 onClick={() => {
                     setOpen(!open)
@@ -140,10 +143,12 @@ const CreatePost = () => {
             {loading &&
                 <div className='fixed bg-green-500 bottom-14 right-1 px-1 py-2 rounded flex gap-2'>
                     <div className='px-1 relative flex justify-center items-center '>
-                        <img
+                        <Image
                             className='w-10 h-10 rounded '
                             src={image}
                             alt=""
+                            height={50}
+                            width={50}
                         />
                         <div className='absolute h-full w-full flex justify-center items-center'>
                             <AiOutlineLoading3Quarters size={20} className='fill-white animate-spin' />
@@ -152,7 +157,7 @@ const CreatePost = () => {
                     <span className='text-sm text-white font-semibold'>Uploaded Image <br /> Preview</span>
                 </div>
             }
-        </>
+        </div>
     )
 }
 

@@ -1,9 +1,7 @@
 'use client'
-import { createContext, useCallback, useContext, useEffect, useState } from 'react'
-import { AppContextTypes, userTypes } from '../types/user'
+import { createContext, useCallback, useEffect } from 'react'
 import axios from 'axios';
 import { setUserData } from '@/redux/features/user';
-import { useDispatch } from 'react-redux';
 import { useAppDispatch } from '../hooks/reduxHooks';
 import { Toaster } from 'react-hot-toast';
 const appContext = createContext<{} | undefined>(undefined);
