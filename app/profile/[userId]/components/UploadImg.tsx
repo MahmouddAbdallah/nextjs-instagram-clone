@@ -54,10 +54,9 @@ const UploadImg = () => {
             setLoading(true);
             const formData = new FormData();
             formData.append('picture', imageFile)
-            const res = await fetch(`${process.env.BASE_URL}/api/user/photo`, {
+            const res = await fetch(`/api/user/photo`, {
                 method: 'PUT',
                 body: formData,
-                cache: 'reload'
             })
             if (!res.ok) throw new Error("Could not upload image");
             const data = await res.json();
@@ -75,7 +74,7 @@ const UploadImg = () => {
                 className='w-full h-full flex justify-center items-center group hover:bg-black/10 rounded-full'>
                 <FaCamera size={25} className='invisible group-hover:visible fill-black/70' />
             </button>
-            <div className={`fixed h-full w-full top-0 left-0 px-5 bg-black/20 flex justify-center items-center ${open ? 'flex' : 'hidden'}`}>
+            <div className={`fixed h-full w-full top-0 left-0 px-5 bg-black/20 flex justify-center items-center ${open ? 'flex z-50' : 'hidden'}`}>
                 <div onClick={() => {
                     if (loading)
                         return

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ProfileHeader from "./components/ProfileHeader";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
     title: "Instagram",
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children, params }: { children: React.ReactNode, params: { userId: string } }) {
     const { userId } = params;
+    if (userId.length != 24) redirect('/')
     const res = await fetch(`${process.env.BASE_URL}/api/user/user-info?userId=${userId}`, {
         method: 'GET',
     });

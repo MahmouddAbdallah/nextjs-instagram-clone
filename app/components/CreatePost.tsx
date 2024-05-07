@@ -10,6 +10,7 @@ import { useAppDispatch } from '../hooks/reduxHooks'
 import { addPost } from "@/redux/features/posts"
 import Image from 'next/image'
 import axios from 'axios';
+import { usePathname } from 'next/navigation';
 
 const CreatePost = () => {
     const [open, setOpen] = useState(false);
@@ -17,6 +18,7 @@ const CreatePost = () => {
     const [loading, setLoading] = useState(false)
     const [image, setImage] = useState('' as string);
     const [imageFile, setImageFile] = useState({} as object);
+    const pathname = usePathname();
     const titleRef = useRef<HTMLTextAreaElement | null>(null)
     const dispatch = useAppDispatch();
 
@@ -66,14 +68,19 @@ const CreatePost = () => {
                     document.body.style.overflowY = 'hidden'
                     setWarn(false)
                 }}
-                className='block py-2 sm:py-3 hover:bg-black/5 px-3 xl:pl-3 xl:w-48 rounded-lg'
+                className={clsx(
+                    'flex items-center gap-3 py-2 sm:py-3 hover:bg-black/5 px-3  rounded-lg',
+                    { "xl:pl-3 xl:w-56": !(pathname.startsWith('/messages')) }
+                )}
             >
                 <div className='flex items-center gap-3'>
                     <div>
                         <MdAddCircleOutline size={24} />
                     </div>
                     <span className={clsx(
-                        'text-sm text-black/80 hidden xl:block',
+                        'text-sm text-black/80 ',
+                        { "hidden": pathname.startsWith('/messages') },
+                        { "hidden xl:block": !(pathname.startsWith('/messages')) }
                     )}>
                         Create
                     </span>

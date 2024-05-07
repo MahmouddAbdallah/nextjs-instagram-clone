@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { MdOutlineSearch } from "react-icons/md";
 import useClickOutside from '../hooks/useClickOutside';
 import clsx from 'clsx';
+import { usePathname } from 'next/navigation';
 
 
 const Search = () => {
@@ -15,6 +16,7 @@ const Search = () => {
     const [keyword, setKeyword] = useState('');
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([])
+    const pathname = usePathname();
 
 
     const fetchUsers = useCallback(
@@ -54,13 +56,18 @@ const Search = () => {
             <div >
                 <button
                     onClick={() => setOpen(!open)}
-                    className='block py-2 sm:py-3 hover:bg-black/5 px-3 xl:pl-3 xl:w-56 rounded-lg'>
+                    className={clsx(
+                        'block py-2 sm:py-3 hover:bg-black/5 px-3  rounded-lg',
+                        { "xl:pl-3 xl:w-56": !(pathname.startsWith('/messages')) }
+                    )}>
                     <div className='flex items-center gap-3'>
                         <div>
                             <MdOutlineSearch size={24} />
                         </div>
                         <span className={clsx(
-                            'text-sm text-black/80 hidden xl:block',
+                            'text-sm text-black/80',
+                            { "hidden": pathname.startsWith('/messages') },
+                            { "hidden xl:block": !(pathname.startsWith('/messages')) }
                         )}>
                             Search
                         </span>
@@ -69,7 +76,10 @@ const Search = () => {
             </div>
             {
                 open &&
-                <div className="fixed w-full left-0 sm:left-[74px] xl:left-[238px] sm:w-80 h-full border top-0 bg-white z-[999]">
+                <div className={clsx(
+                    "fixed w-full left-0 sm:left-[74px] sm:w-80 h-full border top-0 bg-white z-[999]",
+                    { "xl:left-[238px]": !(pathname.startsWith('/messages')) }
+                )}>
                     <div className='w-full hidden sm:block'>
                         <div className='py-10 px-4'>
                             <h1 className="text-xl lg:text-2xl font-semibold">Search</h1>

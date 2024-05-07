@@ -1,4 +1,3 @@
-'use client'
 import { usePathname } from 'next/navigation'
 import { MdOutlineExplore, MdExplore, MdOutlineSearch } from "react-icons/md";
 import { GoHome, GoHomeFill } from "react-icons/go";
@@ -69,14 +68,19 @@ const NavItems = () => {
                                 <li key={nav.name} className='h-fit w-full relative flex justify-center sm:justify-normal'>
                                     <Link
                                         href={nav.href || pathname}
-                                        className='flex items-center gap-3 py-2 sm:py-3 hover:bg-black/5 px-3 xl:pl-3 xl:w-56 rounded-lg'
+                                        className={clsx(
+                                            'flex items-center gap-3 py-2 sm:py-3 hover:bg-black/5 px-3  rounded-lg',
+                                            { "xl:pl-3 xl:w-56": !(pathname.startsWith('/messages')) }
+                                        )}
                                     >
                                         <div>
                                             {nav.icon}
                                         </div>
                                         <div className={clsx(
-                                            'text-sm text-black/80 hidden xl:block',
-                                            { 'font-bold': nav.href == pathname }
+                                            'text-sm text-black/80 ',
+                                            { 'font-bold': nav.href == pathname },
+                                            { "hidden": pathname.startsWith('/messages') },
+                                            { "hidden xl:block": !(pathname.startsWith('/messages')) }
                                         )}>
                                             {nav.name}
                                         </div>

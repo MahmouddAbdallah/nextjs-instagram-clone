@@ -51,10 +51,10 @@ const UserIcon = () => {
                         </div>
                         <span className=
                             {clsx(
-                                'text-sm text-black/80 hidden xl:block',
-                                {
-                                    'font-bold': pathname?.includes(user.id)
-                                }
+                                'text-sm text-black/80 ',
+                                { 'font-bold': pathname?.includes(user.id) },
+                                { "hidden": pathname.startsWith('/messages') },
+                                { "hidden xl:block": !(pathname.startsWith('/messages')) }
                             )}>
                             Profile
                         </span>
@@ -63,7 +63,9 @@ const UserIcon = () => {
                 :
                 <div className=" xl:pl-3 px-3 flex items-center gap-2 xl:mt-2">
                     <div className='bg-slate-200 animate-pulse font-semibold rounded-full w-6 h-6' />
-                    <div className="hidden xl:block h-3 xl:w-20 bg-slate-200 animate-pulse rounded-full" />
+                    {!pathname.startsWith('/messages') &&
+                        <div className="hidden xl:block h-3 xl:w-20 bg-slate-200 animate-pulse rounded-full" />
+                    }
                 </div>
             }
         </div>

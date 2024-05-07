@@ -29,6 +29,9 @@ model Users {
   Followers    Follow[]      @relation("follower")
   Status       Status[]
   SeeStatus    SeeStatus[]
+  receiver     Chat[]        @relation("receiver")
+  sender       Chat[]        @relation("sender")
+  Message      Message[]
 }
 
 model Post {
@@ -95,4 +98,24 @@ model SeeStatus {
   userId   String @db.ObjectId()
   status   Status @relation(fields: [statusId], references: [id])
   statusId String @db.ObjectId()
+}
+
+model Message {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId()
+  sender    Users    @relation(fields: [senderId], references: [id])
+  senderId  String   @db.ObjectId()
+  chat      Chat     @relation(fields: [chatId], references: [id])
+  chatId    String   @db.ObjectId()
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model Chat {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId()
+  sender        Users     @relation(fields: [senderId], references: [id], name: "sender")
+  senderId      String    @db.ObjectId()
+  receiver      Users     @relation(fields: [receiverId], references: [id], name: "receiver")
+  receiverId    String    @db.ObjectId()
+  latestMessage String?
+  Message       Message[]
 }
