@@ -1,9 +1,14 @@
+import { cookies } from 'next/headers';
 import Image from 'next/image';
 import React from 'react'
 
 const Chats = async () => {
+    const token = cookies().get('token_auth')?.value;
     const res = await fetch(`${process.env.BASE_URL}/api/messages/chat`, {
         method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
     });
     if (!res.ok) {
         throw new Error(await res.text());

@@ -4,7 +4,9 @@ import { verifyAuth } from '@/app/lib/verfiyAuth';
 
 export async function GET(req: NextRequest) {
     try {
-        const user = await verifyAuth();
+        const bearerToken = req.headers.get('authorization') as string
+        const token = bearerToken.split(' ')[1]
+        const user = await verifyAuth(token);
         if (!user) return NextResponse.json({ message: 'Please sign in' }, { status: 400 });
         const chats = await prisma.chat.findMany({
             where: {
