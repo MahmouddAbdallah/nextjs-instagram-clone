@@ -7,7 +7,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { MdAddCircleOutline } from "react-icons/md";
 import clsx from 'clsx';
 import { useAppDispatch } from '../hooks/reduxHooks'
-import { addPost } from "@/redux/features/posts"
+import { addPost } from "../../redux/features/posts"
 import Image from 'next/image'
 import axios from 'axios';
 import { usePathname } from 'next/navigation';

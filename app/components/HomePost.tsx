@@ -4,7 +4,7 @@ import PostImg from './PostImg';
 import { useState } from 'react';
 import { CommentIcon } from './icons';
 import { useAppDispatch } from '../hooks/reduxHooks'
-import { setPostData } from '@/redux/features/post'
+import { setPostData } from '../../redux/features/post'
 import { postType } from '../types/user';
 import ViewPost from './ViewPost';
 

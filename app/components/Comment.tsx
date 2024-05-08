@@ -1,18 +1,17 @@
-/* eslint-disable @next/next/no-img-element */
-import { commentType } from '@/app/types/user'
 import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import React from 'react';
 import { IoIosHeart } from "react-icons/io";
-import { addCommentLike } from '@/redux/features/post'
+import { addCommentLike } from '../../redux/features/post'
 import axios from 'axios';
+import Image from 'next/image';
 
 
 
 const Comment = () => {
     const dispatch = useAppDispatch()
     const user = useAppSelector((state) => state.user)
-    const comments = useAppSelector((state) => state.post.comments)
+    const comments: any = useAppSelector((state) => state.post.comments)
 
     const addLike = async (commentId: string) => {
         try {
@@ -24,10 +23,10 @@ const Comment = () => {
     }
 
     const isLiked = (commentId: string) => {
-        return comments.some(item => {
+        return comments.some((item: any) => {
             if (item.id == commentId) {
                 const li = item?.CommentLike?.some(
-                    like => {
+                    (like: any) => {
                         if (like.userId == user.id) {
                             return true
                         } else {
@@ -51,7 +50,7 @@ const Comment = () => {
                     :
                     <div className='space-y-3 px-3'>
                         {
-                            comments.map(comment => {
+                            comments.map((comment: any) => {
 
                                 return (
                                     <div key={comment.id}>
@@ -61,10 +60,12 @@ const Comment = () => {
                                                     {
                                                         comment.user.picture ?
                                                             <div className='min-w-8'>
-                                                                <img
+                                                                <Image
                                                                     src={comment.user.picture}
                                                                     className='w-8 h-8 rounded-full object-cover'
                                                                     alt=""
+                                                                    height={50}
+                                                                    width={50}
                                                                 />
                                                             </div> :
                                                             <div className='w-8 h-8 flex justify-center items-center bg-red-400 rounded-full font-semibold text-white'>

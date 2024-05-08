@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form';
 import { commentType } from '../types/user';
 import axios from 'axios';
-import { addComment } from '@/redux/features/post';
+import { addComment } from '../../redux/features/post';
 import { useAppDispatch } from '../hooks/reduxHooks';
 interface propsAddComment {
     postId: string,

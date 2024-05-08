@@ -4,7 +4,7 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import ViewPost from './ViewPost'
 import { useAppDispatch } from '../hooks/reduxHooks'
-import { setPostData } from '@/redux/features/post'
+import { setPostData } from '../../redux/features/post'
 
 const Post = ({ post }: { post: postType }) => {
     const [open, setOpen] = useState(false);

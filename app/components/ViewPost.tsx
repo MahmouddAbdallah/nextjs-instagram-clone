@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 'use client'
 import useClickOutside from '@/app/hooks/useClickOutside'
 import { commentType } from '@/app/types/user'
@@ -8,7 +7,8 @@ import PostUserHeader from './PostUserHeader';
 import AddComment from '@/app/components/AddComment'
 import AddPostLike from '@/app/components/AddPostLike'
 import { useAppSelector, useAppDispatch } from '../hooks/reduxHooks'
-import { setComment } from '@/redux/features/post'
+import { setComment } from '../../redux/features/post'
+import Image from 'next/image';
 
 const ViewPost = (
     {
@@ -53,7 +53,12 @@ const ViewPost = (
                             username={post?.user?.username as string}
                         />
                         <div className=" bg-black w-full max-h-[400px] md:max-h-[650px]">
-                            <img src={post.image} className="w-full h-full object-cover " alt="" />
+                            <Image
+                                height={50}
+                                width={50}
+                                src={post.image}
+                                className="w-full h-full object-cover "
+                                alt="" />
                         </div>
                     </div>
                 </div>

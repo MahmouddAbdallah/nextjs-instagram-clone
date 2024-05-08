@@ -1,5 +1,5 @@
 import { usePathname } from 'next/navigation'
-import { MdOutlineExplore, MdExplore, MdOutlineSearch } from "react-icons/md";
+import { MdOutlineExplore, MdExplore } from "react-icons/md";
 import { GoHome, GoHomeFill } from "react-icons/go";
 import { BsSend, BsFillSendFill } from "react-icons/bs";
 import Link from 'next/link';

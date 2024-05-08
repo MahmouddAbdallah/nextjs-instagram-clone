@@ -5,7 +5,7 @@ import { IoIosHeart } from "react-icons/io";
 import HomePost from './HomePost';
 import { CommentIcon } from './icons';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
-import { setPostsData } from '@/redux/features/posts';
+import { setPostsData } from '../../redux/features/posts';
 
 const HomePosts = () => {
     const posts = useAppSelector(state => state.posts.posts)
