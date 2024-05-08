@@ -7,17 +7,24 @@ import Image from 'next/image';
 
 const Statuses = async () => {
 
-    const token = cookies().get('token_auth')?.value;
-    const res = await fetch(`${process.env.BASE_URL}/api/status`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`
+    const fetchStatuses = async () => {
+        try {
+            const token = cookies().get('token_auth')?.value;
+            const res = await fetch(`${process.env.BASE_URL}/api/status`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (!res.ok) {
+                throw new Error(await res.text());
+            }
+            return await res.json();
+        } catch (error: any) {
+            console.error(error.message);
         }
-    });
-    if (!res.ok) {
-        throw new Error(await res.text());
     }
-    const data = await res.json();
+    const data = await fetchStatuses()
 
     return (
         <div className='px-2 md:px-10 lg:pl-52 border-b-2 sm:border-b-0 py-2'>
