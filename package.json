@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node app/server.js",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "node app/server.js",
+    "start": "SET NODE_ENV=production && node server.js",
     "lint": "next lint"
   },
   "dependencies": {
