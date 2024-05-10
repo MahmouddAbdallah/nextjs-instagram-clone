@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import NavbarPosts from './NavbarPosts';
 import Settings from '@/app/components/Settings';
 import useClickOutside from '@/app/hooks/useClickOutside';
+import Link from 'next/link';
 
 const ProfileHeader = ({ data }: { data: any }) => {
     const [openSettings, setOpenSetting] = useState(false)
@@ -97,9 +98,9 @@ const ProfileHeader = ({ data }: { data: any }) => {
                             :
                             <div className='space-x-3'>
                                 <FollowBtn />
-                                <button className='bg-black/5 rounded-md px-7 py-2 whitespace-nowrap text-xs font-semibold'>
+                                <Link href={`/messages?userId=${data?.user?.id}`} className='bg-black/5 rounded-md px-7 py-2 whitespace-nowrap text-xs font-semibold'>
                                     Message
-                                </button>
+                                </Link>
                             </div>
                         }
                     </div>

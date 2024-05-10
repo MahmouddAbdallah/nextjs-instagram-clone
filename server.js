@@ -15,14 +15,12 @@ app.prepare().then(() => {
     const io = new Server(httpServer);
 
     io.on("connection", (socket) => {
-        socket.on('private-chat', ({ chatId }) => {
-            socket.join(chatId)
-            socket.on('send-msg', ({ chat, msg }) => {
-                if (chatId == chat) {
-                    io.in(chatId).emit('res-msg', { message: msg })
-                }
-            })
+        socket.on('join-chat', (room) => {
+            socket.join(room)
         })
+        socket.on("message", ({ data, room }) => {
+            io.to(room).emit("messageResponse", { sender: socket.id, message: data });
+        });
     });
 
     httpServer

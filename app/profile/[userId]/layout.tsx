@@ -9,15 +9,22 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children, params }: { children: React.ReactNode, params: { userId: string } }) {
     const { userId } = params;
-    if (userId.length != 24) redirect('/')
-    const res = await fetch(`${process.env.BASE_URL}/api/user/user-info?userId=${userId}`, {
-        method: 'GET',
-    });
-    if (!res.ok) {
-        throw new Error(await res.text());
+    const fetchUser = async () => {
+        try {
+            if (userId.length != 24) redirect('/')
+            const res = await fetch(`${process.env.BASE_URL}/api/user/user-info?userId=${userId}`, {
+                method: 'GET',
+            });
+            if (!res.ok) {
+                throw new Error(await res.text());
+            }
+            return await res.json();
+        } catch (error) {
+            console.error(error);
+        }
     }
-    const data = await res.json();
 
+    const data = await fetchUser();
     return (
         <div className='lg:flex justify-center'>
             <div className='lg:w-[900px]'>
