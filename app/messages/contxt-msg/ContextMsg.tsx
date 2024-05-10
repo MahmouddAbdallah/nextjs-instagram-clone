@@ -51,11 +51,11 @@ const AppContextMsgProvider = ({ children }: {
         socket.emit('join-chat', chatId)
     }, [chatId])
     return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <appContext.Provider value={{ messages, chats, setMessages }}>
-                {children}
-            </appContext.Provider>
-        </Suspense>
+        // <Suspense fallback={<div>Loading...</div>}>
+        <appContext.Provider value={{ messages, chats, setMessages }}>
+            {children}
+        </appContext.Provider>
+        // </Suspense>
     )
 }
 
