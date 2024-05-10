@@ -2,7 +2,7 @@
 import { socket } from '@/app/components/socket';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
-import React, { SetStateAction, createContext, useCallback, useContext, useEffect, useState } from 'react'
+import React, { SetStateAction, createContext, useCallback, useContext, useEffect, useState, Suspense } from 'react'
 interface contextInterface {
     messages: [],
     setMessages: React.Dispatch<SetStateAction<[]>>,
@@ -13,6 +13,7 @@ const appContext = createContext<contextInterface | undefined>(undefined);
 const AppContextMsgProvider = ({ children }: {
     children: React.ReactNode,
 }) => {
+
     const [messages, setMessages] = useState<any>([]);
     const [chats, setChats] = useState<any>([]);
     const query = useSearchParams()
@@ -50,9 +51,11 @@ const AppContextMsgProvider = ({ children }: {
         socket.emit('join-chat', chatId)
     }, [chatId])
     return (
-        <appContext.Provider value={{ messages, chats, setMessages }}>
-            {children}
-        </appContext.Provider>
+        <Suspense fallback={<div>Loading...</div>}>
+            <appContext.Provider value={{ messages, chats, setMessages }}>
+                {children}
+            </appContext.Provider>
+        </Suspense>
     )
 }
 
