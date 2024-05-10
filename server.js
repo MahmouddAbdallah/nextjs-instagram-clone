@@ -16,6 +16,11 @@ app.prepare().then(() => {
 
     io.on("connection", (socket) => {
         socket.on('join-chat', (room) => {
+            Object.keys(socket.rooms).forEach((room) => {
+                if (room !== socket.id) {
+                    socket.leave(room);
+                }
+            });
             socket.join(room)
         })
         socket.on("message", ({ data, room }) => {
@@ -32,3 +37,4 @@ app.prepare().then(() => {
             console.log(`> Ready on http://${hostname}:${port}`);
         });
 });
+
