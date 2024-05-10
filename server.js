@@ -18,6 +18,9 @@ app.prepare().then(() => {
         socket.on('join-chat', (room) => {
             socket.join(room)
         })
+        socket.on('leave-chat', (room) => {
+            socket.leave(room);
+        });
         socket.on("message", ({ data, room }) => {
             io.to(room).emit("messageResponse", { sender: socket.id, message: data });
         });
