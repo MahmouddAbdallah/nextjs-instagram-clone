@@ -1,23 +1,39 @@
-import React from 'react'
-import Chatbody from './component/Chatbody';
-import TypingMsg from './component/TypingMsg';
+import React, { Suspense } from 'react'
+import AppContextMsgProvider from './contxt-msg/ContextMsg';
+import Messages from './component/Message';
+import { redirect } from "next/navigation";
 
-const page = async ({ searchParams }: { searchParams: { chatId: string, userId: string } }) => {
-    const { chatId, userId } = searchParams
+function Loading() {
+    return <>Loading...</>
+}
+const page = async ({ searchParams }: { searchParams: { userId: string, } }) => {
+    const { userId, } = searchParams
+    const fetchUser = async () => {
+        try {
+            if (!userId) {
+                if (userId?.length != 24) return
+            }
+            const res = await fetch(`${process.env.BASE_URL}/api/user/${userId}`, {
+                method: 'GET',
+            });
+            if (!res.ok) {
+                throw new Error(await res.text());
+            }
 
+            const data = await res.json();
+            return data.user
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const data = await fetchUser();
     return (
-        <div className=''>
-            <div className='w-full flex flex-col justify-between'>
-                <Chatbody
-                    chatId={chatId}
-                    userId={userId}
-                />
-                <TypingMsg
-                    chatId={chatId}
-                    userId={userId}
-                />
-            </div>
-        </div>
+        <Suspense fallback={<Loading />}>
+            <AppContextMsgProvider user={data}  >
+                <Messages />
+            </AppContextMsgProvider>
+        </Suspense>
     )
 }
 

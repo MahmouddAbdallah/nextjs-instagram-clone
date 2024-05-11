@@ -6,12 +6,16 @@ import React, { SetStateAction, createContext, useCallback, useContext, useEffec
 interface contextInterface {
     messages: [],
     setMessages: React.Dispatch<SetStateAction<[]>>,
-    chats: []
+    chats: [],
+    chatId: string | null,
+    userId: string | null,
+    user: any | null
 }
 const appContext = createContext<contextInterface | undefined>(undefined);
 
-const AppContextMsgProvider = ({ children }: {
+const AppContextMsgProvider = ({ children, user }: {
     children: React.ReactNode,
+    user: any
 }) => {
 
     const [messages, setMessages] = useState<any>([]);
@@ -51,11 +55,9 @@ const AppContextMsgProvider = ({ children }: {
         socket.emit('join-chat', chatId)
     }, [chatId])
     return (
-        // <Suspense fallback={<div>Loading...</div>}>
-        <appContext.Provider value={{ messages, chats, setMessages }}>
+        <appContext.Provider value={{ messages, chats, setMessages, chatId, userId, user }}>
             {children}
         </appContext.Provider>
-        // </Suspense>
     )
 }
 
