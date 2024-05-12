@@ -7,6 +7,7 @@ import { useAppDispatch } from '../hooks/reduxHooks'
 import { setPostData } from '../../redux/features/post'
 import { postType } from '../types/user';
 import ViewPost from './ViewPost';
+import AddCommentPost from './AddCommentPost';
 
 
 const HomePost = ({ post }: { post: any }) => {
@@ -54,6 +55,7 @@ const HomePost = ({ post }: { post: any }) => {
                         <CommentIcon className=' stroke-[2px] stroke-black' />
                     </button>
                 </div>
+                <AddCommentPost postId={post.id} />
             </div>
             {openViewPost && < ViewPost open={openViewPost} setOpen={setOpenViewPost} />}
         </div>

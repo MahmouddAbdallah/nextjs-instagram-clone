@@ -54,8 +54,8 @@ const ViewPost = (
                         />
                         <div className=" bg-black w-full max-h-[400px] md:max-h-[650px]">
                             <Image
-                                height={50}
-                                width={50}
+                                height={500}
+                                width={500}
                                 src={post.image}
                                 className="w-full h-full object-cover "
                                 alt="" />
