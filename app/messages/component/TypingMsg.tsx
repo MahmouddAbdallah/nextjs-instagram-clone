@@ -6,7 +6,7 @@ import { socket } from '../../components/socket';
 import { useRouter } from 'next/navigation';
 import { useContextMsgApp } from '../contxt-msg/ContextMsg';
 
-const TypingMsg = () => {
+const TypingMsg = ({ userId, chatId }: { userId: string, chatId: string }) => {
     const { register, handleSubmit, formState: { isValid }, reset } = useForm();
     const context = useContextMsgApp();
     const router = useRouter()
@@ -14,14 +14,15 @@ const TypingMsg = () => {
     const onSubmit = handleSubmit(async (formData) => {
         try {
             const { data }: { data: any } = await axios.post('api/messages/message', {
-                chatId: context?.chatId,
-                receiverId: context?.userId,
+                chatId: chatId,
+                receiverId: userId,
                 content: formData.message
             })
             if (data.chat) {
-                router.push(`/messages?userId=${context?.userId}&chatId=${data.chat.id}`)
+                context?.setChats(prev => [...prev, data.chat] as any)
+                router.push(`/messages?userId=${userId}&chatId=${data.chat.id}`)
             }
-            socket.emit("message", { data: data.message, room: context?.chatId });
+            socket.emit("message", { data: data.message, room: chatId });
             reset()
         } catch (error) {
             console.error(error);

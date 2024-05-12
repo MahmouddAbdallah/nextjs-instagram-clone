@@ -6,7 +6,7 @@ import Chats from '../component/Chats';
 import { useContextMsgApp } from '../contxt-msg/ContextMsg';
 import { MessagesIcon } from '@/app/components/icons';
 
-const Messages = () => {
+const Messages = ({ userId, chatId }: { userId: string, chatId: string }) => {
 
     const [open, setOpen] = useState(true)
     const context = useContextMsgApp();
@@ -25,8 +25,12 @@ const Messages = () => {
                             <div className="col-span-12 md:col-span-9">
                                 {context?.userId ?
                                     <>
-                                        <Chatbody setOpen={setOpen} />
-                                        <TypingMsg />
+                                        <Chatbody
+                                            setOpen={setOpen} />
+                                        <TypingMsg
+                                            userId={userId}
+                                            chatId={chatId}
+                                        />
                                     </>
                                     :
                                     <div className='flex justify-center h-svh items-center'>
@@ -47,8 +51,12 @@ const Messages = () => {
                     <div className="col-span-12 md:col-span-9">
                         {context?.userId ?
                             <>
-                                <Chatbody setOpen={setOpen} />
-                                <TypingMsg />
+                                <Chatbody
+                                    setOpen={setOpen} />
+                                <TypingMsg
+                                    userId={userId}
+                                    chatId={chatId}
+                                />
                             </>
                             :
                             <div className='flex justify-center h-svh items-center'>

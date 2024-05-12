@@ -16,6 +16,7 @@ export async function GET(req: NextRequest) {
                 ]
             }, select: {
                 id: true,
+                latestMessage: true,
                 sender: {
                     select: {
                         id: true,
@@ -36,11 +37,13 @@ export async function GET(req: NextRequest) {
             if (curr.receiver.id == user.id) {
                 return {
                     id: curr.id,
+                    latestMessage: curr.latestMessage,
                     user: curr.sender
                 }
             } else {
                 return {
                     id: curr.id,
+                    latestMessage: curr.latestMessage,
                     user: curr.receiver
                 }
             }

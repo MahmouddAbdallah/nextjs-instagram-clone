@@ -6,8 +6,8 @@ import { redirect } from "next/navigation";
 function Loading() {
     return <>Loading...</>
 }
-const page = async ({ searchParams }: { searchParams: { userId: string, } }) => {
-    const { userId, } = searchParams
+const page = async ({ searchParams }: { searchParams: { userId: string, chatId: string } }) => {
+    const { userId, chatId } = searchParams
     const fetchUser = async () => {
         try {
             if (!userId) {
@@ -31,7 +31,10 @@ const page = async ({ searchParams }: { searchParams: { userId: string, } }) => 
     return (
         <Suspense fallback={<Loading />}>
             <AppContextMsgProvider user={data}  >
-                <Messages />
+                <Messages
+                    userId={userId}
+                    chatId={chatId}
+                />
             </AppContextMsgProvider>
         </Suspense>
     )

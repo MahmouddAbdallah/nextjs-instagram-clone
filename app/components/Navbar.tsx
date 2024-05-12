@@ -7,7 +7,7 @@ import CreatePost from './CreatePost';
 
 const Navbar = () => {
     return (
-        <nav className='block sm:hidden border-b-2 sticky z-50 top-0 bg-white'>
+        <nav className='block sm:hidden border-b-2 sticky z-0 top-0 bg-white'>
             <div className='py-1 px-2 flex items-center justify-between'>
                 <div className=''>
                     <Link href={'/'} className='block'>

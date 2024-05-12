@@ -1,5 +1,5 @@
 'use client'
-import React, { SetStateAction, useEffect } from 'react'
+import React, { SetStateAction, useCallback, useEffect } from 'react'
 import ScrollBottom from 'react-scroll-to-bottom'
 import { useContextMsgApp } from '../contxt-msg/ContextMsg'
 import clsx from 'clsx'
@@ -10,16 +10,19 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 
 const Chatbody = ({ setOpen }: { setOpen: React.Dispatch<SetStateAction<boolean>> }) => {
     const context = useContextMsgApp();
-    const user = useAppSelector((state) => state.user)
+    const user = useAppSelector((state) => state.user);
+
+    const handleReceivedMessage = useCallback((data: any) => {
+        console.log(data);
+        context?.setMessages((prevMessages: any) => [...prevMessages, data.message] as any);
+    }, [context])
+
     useEffect(() => {
-        const handleReceivedMessage = (data: any) => {
-            context?.setMessages((prevMessages: any) => [...prevMessages, data.message] as any);
-        };
         socket.on('messageResponse', handleReceivedMessage);
         return () => {
             socket.off('messageResponse', handleReceivedMessage);
         };
-    }, [context])
+    }, [handleReceivedMessage])
 
     return (
         <div>

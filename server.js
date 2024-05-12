@@ -16,11 +16,11 @@ app.prepare().then(() => {
 
     io.on("connection", (socket) => {
         socket.on('join-chat', (room) => {
-            Object.keys(socket.rooms).forEach((room) => {
-                if (room !== socket.id) {
-                    socket.leave(room);
-                }
-            });
+            // Object.keys(socket.rooms).forEach((room) => {
+            //     if (room !== socket.id) {
+            //         socket.leave(room);
+            //     }
+            // });
             socket.join(room)
         })
         socket.on("message", ({ data, room }) => {

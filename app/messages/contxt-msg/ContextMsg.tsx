@@ -6,6 +6,7 @@ import React, { SetStateAction, createContext, useCallback, useContext, useEffec
 interface contextInterface {
     messages: [],
     setMessages: React.Dispatch<SetStateAction<[]>>,
+    setChats: React.Dispatch<SetStateAction<[]>>,
     chats: [],
     chatId: string | null,
     userId: string | null,
@@ -55,7 +56,7 @@ const AppContextMsgProvider = ({ children, user }: {
         socket.emit('join-chat', chatId)
     }, [chatId])
     return (
-        <appContext.Provider value={{ messages, chats, setMessages, chatId, userId, user }}>
+        <appContext.Provider value={{ messages, chats, setMessages, chatId, userId, user, setChats }}>
             {children}
         </appContext.Provider>
     )

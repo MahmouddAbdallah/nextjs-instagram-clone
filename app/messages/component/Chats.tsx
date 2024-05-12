@@ -9,9 +9,10 @@ import { FaArrowLeftLong } from 'react-icons/fa6';
 const Chats = ({ setOpen }: { setOpen: React.Dispatch<SetStateAction<boolean>> }) => {
     const context = useContextMsgApp();
     const user = useAppSelector(state => state.user)
+
     return (
         <div className='border-r-2 w-full h-full'>
-            <div className='sticky z-50 top-0 bg-white py-4 md:py-5 px-5 shadow-md'>
+            <div className='sticky z-50 top-0 bg-white py-4 md:py-5 px-5 border-b'>
                 <div className='flex'>
                     <Link href={'/'}
                         className='md:hidden flex items-center'>
@@ -28,7 +29,7 @@ const Chats = ({ setOpen }: { setOpen: React.Dispatch<SetStateAction<boolean>> }
                         <Link
                             onClick={() => { setOpen(false) }}
                             href={`/messages?userId=${chat.user.id}&chatId=${chat.id}`} key={chat.id}>
-                            <div className='flex items-center gap-1 w-full border-b-2 px-3 py-3'>
+                            <div className='flex items-center gap-3 w-full px-3 py-2'>
                                 <div>
                                     {chat.user.picture ?
                                         <Image
@@ -37,7 +38,8 @@ const Chats = ({ setOpen }: { setOpen: React.Dispatch<SetStateAction<boolean>> }
                                             width={50}
                                             className='w-14 h-14 rounded-full'
                                             alt=''
-                                        /> : <div className='w-14 h-14'>
+                                        /> :
+                                        <div className='w-14 h-14'>
                                             <div className='w-14 h-14 bg-red-400 rounded-full flex justify-center items-center text-white font-medium'>
                                                 {
                                                     chat.user.username?.split("")[0]
@@ -46,7 +48,10 @@ const Chats = ({ setOpen }: { setOpen: React.Dispatch<SetStateAction<boolean>> }
                                         </div>
                                     }
                                 </div>
-                                <h4 className='font-medium'>{chat.user.username}</h4>
+                                <div className='leading-tight'>
+                                    <h4 className='font-medium'>{chat.user.username}</h4>
+                                    <span className='text-xs text-black/50 md:hidden'>{chat.latestMessage}</span>
+                                </div>
                             </div>
                         </Link>
                     )
