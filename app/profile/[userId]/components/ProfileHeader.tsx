@@ -10,10 +10,14 @@ import NavbarPosts from './NavbarPosts';
 import Settings from '@/app/components/Settings';
 import useClickOutside from '@/app/hooks/useClickOutside';
 import Link from 'next/link';
+import Followers from './Followers';
+import Following from './Following';
 
 const ProfileHeader = ({ data }: { data: any }) => {
     const [openSettings, setOpenSetting] = useState(false)
     const refElement = useClickOutside(() => { setOpenSetting(false) })
+    const [openFollower, setOpenFollwer] = useState(false)
+    const [openFollowing, setOpenFollwing] = useState(false)
     useEffect(() => {
         document.title = data?.user?.name || "Anonymous"
     }, [data?.user])
@@ -112,13 +116,23 @@ const ProfileHeader = ({ data }: { data: any }) => {
                                 </span>
                                 posts
                             </span>
-                            <button className='text-sm'>
+                            <button
+                                onClick={() => {
+                                    setOpenFollwer(true)
+                                    document.body.style.overflowY = 'hidden'
+                                }}
+                                className='text-sm'>
                                 <span className='mr-1 font-semibold'>
                                     {data?.followerNumber}
                                 </span>
                                 followers
                             </button>
-                            <button className='text-sm'>
+                            <button
+                                onClick={() => {
+                                    setOpenFollwing(true)
+                                    document.body.style.overflowY = 'hidden'
+                                }}
+                                className='text-sm'>
                                 <span className='mr-1 font-semibold'>
                                     {data?.followingNumber}
                                 </span>
@@ -136,6 +150,8 @@ const ProfileHeader = ({ data }: { data: any }) => {
                 followerNum={data?.followerNumber}
                 followingNum={data?.followingNumber}
             />
+            {openFollower && <Followers setOpen={setOpenFollwer} userId={data?.user?.id} />}
+            {openFollowing && <Following setOpen={setOpenFollwing} userId={data?.user?.id} />}
         </div>
     )
 }

@@ -60,9 +60,9 @@ const InputImage: React.FC<inputImageProps> = ({ setImageFile, image, setImage }
                         </div>
                         :
                         <div>
-                            <input type="file" onChange={handleOnChangeInput} className='hidden' ref={inputRef} />
+                            <input type="file" accept="image/jpeg,image/png,image/heic,image/heif" onChange={handleOnChangeInput} className='hidden' ref={inputRef} />
                             <button ref={btnRef} className='text-[10px] font-semibold text-white bg-blue-500 px-3 py-1 rounded-md'>
-                                Select from computer
+                                Select Image
                             </button>
                         </div>
                 }

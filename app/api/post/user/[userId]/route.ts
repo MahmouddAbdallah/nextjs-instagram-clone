@@ -20,20 +20,23 @@ export async function GET(req: Request, { params }: { params: Params }) {
                     }
                 },
                 likes: {
-                    take:3,
+                    take: 3,
                     select: {
                         id: true,
-                        user:{
-                            select:{
-                                id:true,
-                                picture:true,
+                        user: {
+                            select: {
+                                id: true,
+                                picture: true,
                             }
                         }
                     }
                 },
+            },
+            orderBy: {
+                createAt: "desc"
             }
         })
-        
+
         // const postsWithLikesCount = await Promise.all(posts.map(async (post) => {
         //     const likesCount = await prisma.postLike.count({
         //         where: {

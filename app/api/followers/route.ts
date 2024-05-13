@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
             }
         })
         if (isFollow) {
-            const follow = await prisma.follow.deleteMany({
+            await prisma.follow.deleteMany({
                 where: {
                     followingId: verfiy.id,
                     followerId: body.followerId
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ isFollow: false }, { status: 201 });
         }
         else {
-            const follow = await prisma.follow.create({
+            await prisma.follow.create({
                 data: {
                     followingId: verfiy.id,
                     followerId: body.followerId
@@ -35,8 +35,68 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ isFollow: true }, { status: 201 });
         }
     } catch (error: any) {
-        console.log(error);
-        return NextResponse.json({ error })
+        return NextResponse.json({ error: error.message, message: 'There is error in server' }, { status: 400 })
     }
 }
+
+export async function GET(req: NextRequest) {
+    try {
+        const url = new URL(req.url);
+        const query = new URLSearchParams(url.search);
+        const userId = query.get('userId')
+        const skip = (parseInt(query.get('skip') as string)) || 0;
+
+        if (userId) {
+            const followers = await prisma.follow.findMany({
+                where: {
+                    followerId: userId as string
+                    // ,AND:{
+                    //     follower:{
+                    //         OR:[]
+                    //     }
+                    // }
+                },
+                take: 2,
+                skip: skip,
+                select: {
+                    id: true,
+                    following: {
+                        select: {
+                            username: true,
+                            name: true,
+                            picture: true
+                        }
+                    }
+                }
+            })
+            return NextResponse.json({ followers }, { status: 200 })
+        }
+        return NextResponse.json({ message: 'Please HHHHHHHHH wahtdk' }, { status: 400 })
+
+    } catch (error: any) {
+        return NextResponse.json({ error: error.message, message: 'There is error in server' }, { status: 400 })
+    }
+}
+
+
+export async function DELETE(req: NextRequest) {
+    try {
+        const url = new URL(req.url);
+        const query = new URLSearchParams(url.search);
+        const followId = query.get('followId')
+        const userId = query.get('userId')
+        const user = await verifyAuth();
+        if (!user) return NextResponse.json({ message: "Invalid" }, { status: 400 });
+        if (user.id != userId) return NextResponse.json({ message: "Invalid" }, { status: 400 });
+        if (followId) {
+            await prisma.follow.delete({ where: { id: followId as string } })
+            return NextResponse.json({ message: 'Deleted Sucessfully!!' }, { status: 200 })
+        }
+        return NextResponse.json({ message: 'Please HHHHHHHHH wahtdk' }, { status: 400 })
+
+    } catch (error: any) {
+        return NextResponse.json({ error: error.message, message: 'There is error in server' }, { status: 400 })
+    }
+}
+
 
