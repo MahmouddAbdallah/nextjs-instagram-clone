@@ -1,25 +1,52 @@
 'use client'
 import axios from 'axios';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef, useState } from 'react';
 import { IoIosHeart } from "react-icons/io";
 import HomePost from './HomePost';
 import { CommentIcon } from './icons';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
-import { setPostsData } from '../../redux/features/posts';
+import { setPostsData, addPosts } from '../../redux/features/posts';
+import { LuLoader2 } from 'react-icons/lu';
 
 const HomePosts = () => {
     const posts = useAppSelector(state => state.posts.posts)
-
     const dispatch = useAppDispatch()
+    const [skip, setSkip] = useState(0)
+    const [initScroll, setInitScroll] = useState(1000)
+
+
+    useEffect(() => {
+        const onScroll = () => {
+            const scrollTop = window.scrollY
+            if (scrollTop >= initScroll) {
+                setInitScroll(prev => prev + 1000)
+                setSkip(skip + 3)
+            }
+        }
+        // clean up code
+        // window.removeEventListener('scroll', onScroll);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, [initScroll, skip]);
+
+
 
     const fetchPosts = useCallback(async () => {
         try {
-            const { data } = await axios.get(`/api/post`)
-            dispatch(setPostsData(data))
+            const { data } = await axios.get(`/api/post?skip=${skip}`)
+
+            if (skip > 0) {
+                data.posts.forEach((element: any) => {
+                    dispatch(addPosts(element))
+                });
+            }
+            else {
+                dispatch(setPostsData(data))
+            }
         } catch (error) {
             console.error(error);
         }
-    }, [dispatch]);
+    }, [dispatch, skip]);
 
     useEffect(() => {
         fetchPosts()
@@ -85,6 +112,9 @@ const HomePosts = () => {
                             )
                     }
                 </ul>
+                <div className='flex justify-center pt-10'>
+                    <LuLoader2 className='animate-spin w-8 h-8' />
+                </div>
             </div>
         </div>
     )

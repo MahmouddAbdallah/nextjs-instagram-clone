@@ -18,9 +18,13 @@ const postSlice = createSlice({
         },
         addPost(state, action: PayloadAction<any>) {
             state.posts.unshift(action.payload)
-        }
+        },
+        addPosts(state, action: PayloadAction<any>) {
+            state.posts.push(action.payload)
+        },
+
     }
 })
 
-export const { setPostsData, addPost } = postSlice.actions
+export const { setPostsData, addPost, addPosts } = postSlice.actions
 export default postSlice.reducer

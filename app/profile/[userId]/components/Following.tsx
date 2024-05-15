@@ -54,7 +54,6 @@ const Following = ({ userId, setOpen }: { userId: string, setOpen: React.Dispatc
         document.body.style.overflowY = 'auto'
     }
     const refElemet = useClickOutside(handleClose)
-    console.log(users);
 
     return (
         <div className='fixed w-full h-full top-0 left-0 bg-black/20 z-50 flex justify-center items-center'>

@@ -58,6 +58,9 @@ export async function GET(req: NextRequest) {
     try {
         const verfiy = await verifyAuth();
         if (!verfiy) return NextResponse.json({ message: 'Please sign in' }, { status: 400 });
+        const url = new URL(req.url);
+        const query = new URLSearchParams(url.search);
+        const skip = query.get('skip');
         const posts = await prisma.post.findMany({
             where: {
                 user: {
@@ -68,6 +71,8 @@ export async function GET(req: NextRequest) {
                     }
                 }
             },
+            take: 3,
+            skip: parseInt(skip as string),
             include: {
                 user: {
                     select: {

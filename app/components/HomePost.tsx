@@ -42,44 +42,46 @@ const HomePost = ({ post }: { post: any }) => {
                         setCount={setCount}
                         count={count}
                     />
-                    <div>
-                        <div className='flex items-start gap-3'>
-                            <div className='pt-2'>
-                                <LikeToPostHome
-                                    isLike={isLike}
-                                    setIsLike={setIsLike}
-                                    setCount={setCount}
-                                    postId={post.id as string}
-                                />
+                    <div className='px-2 sm:px-0'>
+                        <div>
+                            <div className='flex items-start gap-3'>
+                                <div className='pt-2'>
+                                    <LikeToPostHome
+                                        isLike={isLike}
+                                        setIsLike={setIsLike}
+                                        setCount={setCount}
+                                        postId={post.id as string}
+                                    />
+                                </div>
+                                <button
+                                    onClick={viewPost}
+                                    className='pt-2 -ml-1'>
+                                    <CommentIcon className=' stroke-[2px] stroke-black' />
+                                </button>
                             </div>
-                            <button
-                                onClick={viewPost}
-                                className='pt-2 -ml-1'>
-                                <CommentIcon className=' stroke-[2px] stroke-black' />
-                            </button>
+                            {count > 0 && <div className=''>
+                                <span className='text-sm font-medium'>{count} {count == 1 ? "like" : "likes"}</span>
+                            </div>}
                         </div>
                         <div className=''>
-                            <span className='text-sm font-medium'>{count} {count == 1 ? "like" : "likes"}</span>
-                        </div>
-                    </div>
-                    <div className=''>
-                        {post.title &&
-                            <div className='pt-2'>
-                                <div className="flex gap-2">
-                                    <Link
-                                        href={`/profile/${post.user.id}`}
-                                        className='text-sm font-semibold'
-                                    >
-                                        {post.user.username}
-                                    </Link>
-                                    <div>
-                                        <span className='text-sm font-medium'>{post.title}</span>
+                            {post.title &&
+                                <div className='pt-2'>
+                                    <div className="flex items-center gap-2">
+                                        <Link
+                                            href={`/profile/${post.user.id}`}
+                                            className='text-sm font-semibold'
+                                        >
+                                            {post.user.username}
+                                        </Link>
+                                        <div>
+                                            <span className='text-sm font-medium'>{post.title}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
+                            }
+                        </div>
+                        <AddCommentPost postId={post.id} />
                     </div>
-                    <AddCommentPost postId={post.id} />
                 </div>
                 {openViewPost && < ViewPost open={openViewPost} setOpen={setOpenViewPost} />}
             </div>
