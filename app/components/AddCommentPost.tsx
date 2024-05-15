@@ -32,7 +32,7 @@ const AddCommentPost: React.FC<propsAddComment> = ({ postId }) => {
                     type="text"
                     {...register('text', { required: true })}
                     placeholder='Add a comment...'
-                    className='outline-none w-full py-2 pl-2 my-1 text-xs'
+                    className='outline-none w-full py-2 my-1 text-xs'
                 />
                 {isValid &&
                     <button

@@ -34,11 +34,11 @@ export async function GET(req: NextRequest, { params }: { params: Params }) {
                                 picture: true,
                                 username: true
                             }
-                        }
+                        },
                     },
                     orderBy: {
                         createdAt: "desc"
-                    }
+                    },
                 })
             ])
             return NextResponse.json({ count: likes._count, isLike: isLike._count == 1 ? true : false, users: threeUsers })

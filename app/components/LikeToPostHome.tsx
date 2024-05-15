@@ -6,12 +6,11 @@ import { IoIosHeart } from "react-icons/io";
 interface propsInterface {
     isLike: boolean,
     setIsLike: React.Dispatch<React.SetStateAction<boolean>>,
-    count: number,
     setCount: React.Dispatch<React.SetStateAction<number>>;
     postId: string
 
 }
-const LikeToPostHome: React.FC<propsInterface> = ({ isLike, setIsLike, count, setCount, postId }) => {
+const LikeToPostHome: React.FC<propsInterface> = ({ isLike, setIsLike, setCount, postId }) => {
 
     const setLike = (id: string) => {
         const likes = localStorage.getItem('likes') as any
@@ -38,9 +37,6 @@ const LikeToPostHome: React.FC<propsInterface> = ({ isLike, setIsLike, count, se
                     { "fill-red-500 stroke-red-500": isLike }
                 )} />
             </button>
-            <div>
-                <span className='text-sm font-medium'>{count} {count == 1 ? "like" : "likes"}</span>
-            </div>
         </div>
     )
 }

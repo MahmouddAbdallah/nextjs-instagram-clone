@@ -18,9 +18,15 @@ const AddPostLike: React.FC<props> = ({ postId }) => {
 
     const addLike = async () => {
         try {
-            await axios.put(`/api/post/like `, {
-                postId
-            })
+            const likes = localStorage.getItem('likes') as any
+            let likesIds: any = JSON.parse(likes as string) || []
+            const index = likesIds.findIndex((item: any) => item == postId)
+            if (index == -1) {
+                likesIds.push(postId)
+            } else {
+                likesIds.splice(index, 1)
+            }
+            localStorage.setItem('likes', JSON.stringify(likesIds))
             dispatch(addLikePost())
         } catch (error) {
             console.error(error);
@@ -29,7 +35,7 @@ const AddPostLike: React.FC<props> = ({ postId }) => {
     const getLikes = useCallback(
         async () => {
             try {
-                const { data } = await axios.get(`${process.env.BASE_URL}/api/post/like/${post.id}`);
+                const { data } = await axios.get(`/api/post/like/${post.id}`);
                 dispatch(setLikes(data))
             } catch (error) {
                 console.error(error);
@@ -51,7 +57,7 @@ const AddPostLike: React.FC<props> = ({ postId }) => {
             </button>
             <div className='flex gap-3'>
                 {
-                    like.count ?
+                    like.count > 0 ?
                         <div>
                             <div className="flex ">
                                 {like?.users?.map((user) => {

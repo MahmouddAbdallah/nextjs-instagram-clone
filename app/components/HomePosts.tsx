@@ -45,7 +45,7 @@ const HomePosts = () => {
 
     }
     useEffect(() => {
-        const intervalLikes = setInterval(addLikes, 20000)
+        const intervalLikes = setInterval(addLikes, 10000)
         return () => { clearInterval(intervalLikes) }
     }, [])
 

@@ -51,6 +51,7 @@ const ViewPost = (
                             className='flex md:hidden bg-white w-full'
                             picture={post?.user?.picture as string}
                             username={post?.user?.username as string}
+                            postId={post.id}
                         />
                         <div className=" bg-black w-full max-h-[400px] md:max-h-[650px]">
                             <Image
@@ -84,5 +85,3 @@ const ViewPost = (
 }
 
 export default ViewPost
-
-//

@@ -34,7 +34,6 @@ const PostImg: React.FC<propsInterface> = ({ img, postId, isLike, setIsLike, set
         <button
             onClick={() => {
                 if (!isLike && !heart) {
-                    // addLike()
                     setLike(postId)
                 }
                 setHeart(!heart)
