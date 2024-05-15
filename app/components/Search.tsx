@@ -9,6 +9,7 @@ import { MdOutlineSearch } from "react-icons/md";
 import useClickOutside from '../hooks/useClickOutside';
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
+import OldSearch from './OldSearch';
 
 
 const Search = () => {
@@ -17,7 +18,6 @@ const Search = () => {
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([])
     const pathname = usePathname();
-
 
     const fetchUsers = useCallback(
         async () => {
@@ -50,6 +50,20 @@ const Search = () => {
             document.body.style.overflow = "auto"
         }
     }, [open])
+
+    const saveSearchUser = (user: any) => {
+        setOpen(false);
+        const searchUser = localStorage.getItem('searchUser') as any
+        const users: any = JSON.parse(searchUser as string) || []
+        const index = users.findIndex((item: any) => item.id == user.id)
+        if (index == -1) {
+            users.unshift(user)
+        } else {
+            users.splice(index, 1)
+            users.unshift(user)
+        }
+        localStorage.setItem('searchUser', JSON.stringify(users))
+    }
 
     return (
         <div ref={refElement}>
@@ -85,8 +99,8 @@ const Search = () => {
                             <h1 className="text-xl lg:text-2xl font-semibold">Search</h1>
                         </div>
                     </div>
-                    <div className="px-4 pt-5 sm:pt-0">
-                        <div className='flex items-center gap-3'>
+                    <div className="px-4 pt-5 sm:pt-0 border-b-2 pb-2 sm:border-none">
+                        <div className='flex items-center gap-3 '>
                             <div className='w-full relative flex items-center'>
                                 <input
                                     type="text"
@@ -125,7 +139,9 @@ const Search = () => {
                             return (
                                 <li key={user.id}>
                                     <Link
-                                        onClick={() => { setOpen(false); }}
+                                        onClick={() => {
+                                            saveSearchUser(user)
+                                        }}
                                         className="block w-full p-2 rounded-md hover:bg-black/5 duration-150"
                                         href={`/profile/${user.id}`}>
                                         <div className="w-full flex gap-2">
@@ -156,6 +172,7 @@ const Search = () => {
                             )
                         })}
                     </ul>
+                    {!keyword && <OldSearch setOpen={setOpen} />}
                 </div>
             }
         </div>

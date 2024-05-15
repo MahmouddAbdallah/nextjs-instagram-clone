@@ -1,3 +1,4 @@
+import { setLikes } from '@/redux/features/postLike';
 import axios from 'axios';
 import clsx from 'clsx'
 import React from 'react'
@@ -12,22 +13,28 @@ interface propsInterface {
 }
 const LikeToPostHome: React.FC<propsInterface> = ({ isLike, setIsLike, count, setCount, postId }) => {
 
-    const addLike = async () => {
-        try {
-            await axios.put('/api/post/like', {
-                postId
-            })
+    const setLike = (id: string) => {
+        const likes = localStorage.getItem('likes') as any
+        let likesIds: any = JSON.parse(likes as string) || []
+        const index = likesIds.findIndex((item: any) => item == id)
+        if (index == -1) {
+            likesIds.push(id)
             setIsLike(!isLike)
-            setCount(isLike ? count - 1 : count + 1)
-        } catch (error) {
-            console.error(error);
+            setCount(prev => isLike ? prev - 1 : prev + 1)
+        } else {
+            likesIds.splice(index, 1)
+            setIsLike(!isLike)
+            setCount(prev => isLike ? prev - 1 : prev + 1)
         }
+        localStorage.setItem('likes', JSON.stringify(likesIds))
     }
     return (
         <div>
-            <button onClick={addLike}>
+            <button onClick={() => {
+                setLike(postId)
+            }}>
                 <IoIosHeart className={clsx(
-                    'fill-none stroke-[30px] w-7 h-7',
+                    'fill-none stroke-[30px] w-7 h-7 active:scale-110 transition',
                     { "fill-red-500 stroke-red-500": isLike }
                 )} />
             </button>

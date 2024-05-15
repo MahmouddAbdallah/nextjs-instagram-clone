@@ -39,11 +39,11 @@ const Followers = ({ userId, setOpen }: { userId: string, setOpen: React.Dispatc
             console.error({ error });
         }
     }
-
-    const refElemet = useClickOutside(() => {
+    const handleClose = () => {
         setOpen(false)
         document.body.style.overflowY = 'auto'
-    })
+    }
+    const refElemet = useClickOutside(handleClose)
 
     return (
         <div className='fixed w-full h-full top-0 left-0 bg-black/20 z-50 flex justify-center items-center'>
@@ -54,7 +54,7 @@ const Followers = ({ userId, setOpen }: { userId: string, setOpen: React.Dispatc
                             Followers
                         </span>
                     </div>
-                    <button><IoClose size={22} /></button>
+                    <button onClick={handleClose}><IoClose size={22} /></button>
                 </div>
                 <div className="px-3 py-2">
                     <div>

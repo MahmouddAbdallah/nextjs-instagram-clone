@@ -15,25 +15,27 @@ const PostImg: React.FC<propsInterface> = ({ img, postId, isLike, setIsLike, set
     const [firstClick, setFirstClick] = useState(false);
     const [heart, setHeart] = useState(true);
 
-    const addLike = async () => {
-        try {
-            if (!isLike) {
-                await axios.put('/api/post/like', {
-                    postId: postId
-                })
-                setCount(count + 1)
-                setIsLike(true)
-            }
-        } catch (error) {
-            console.error(error);
+    const setLike = (id: string) => {
+        const likes = localStorage.getItem('likes') as any
+        const likesIds: any = JSON.parse(likes as string) || []
+        const index = likesIds.findIndex((item: any) => item == id)
+        if (index == -1 && isLike == false) {
+            likesIds.push(id)
+            setIsLike(true)
+            setCount(prev => prev + 1)
+        } else {
+            likesIds.splice(index, 1)
+            setCount((prev) => prev - 1)
+            setIsLike(false)
         }
+        localStorage.setItem('likes', JSON.stringify(likesIds))
     }
-
     return (
         <button
             onClick={() => {
                 if (!isLike && !heart) {
-                    addLike()
+                    // addLike()
+                    setLike(postId)
                 }
                 setHeart(!heart)
                 setFirstClick(heart ? false : true)

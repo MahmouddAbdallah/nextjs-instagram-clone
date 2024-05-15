@@ -9,7 +9,7 @@ import useClickOutside from "@/app/hooks/useClickOutside";
 const Following = ({ userId, setOpen }: { userId: string, setOpen: React.Dispatch<React.SetStateAction<boolean>> }) => {
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(false)
-    const [deleLoading, setDeleLoading] = useState("")
+    const [folLoading, setFolLoading] = useState("")
     const [skip, setSkip] = useState(0)
     const [initScroll, setInitScroll] = useState(50)
     const folRef = useRef<HTMLDivElement>(null)
@@ -28,9 +28,16 @@ const Following = ({ userId, setOpen }: { userId: string, setOpen: React.Dispatc
 
     const fetchFollowing = useCallback(async () => {
         try {
+            setLoading(true)
             const { data } = await axios.get(`/api/followers/following?userId=${userId}&skip=${skip}`)
-            if (skip > 0) setUsers((prev) => [...prev, ...data.followers] as [])
-            else setUsers(data.followers);
+            if (skip > 0) {
+                setUsers((prev) => [...prev, ...data.followers] as [])
+                setLoading(false)
+            }
+            else {
+                setUsers(data.followers);
+                setLoading(false)
+            }
 
         } catch (error: any) {
             toast.error(error?.response?.data?.message || 'There is an Error')
@@ -42,10 +49,12 @@ const Following = ({ userId, setOpen }: { userId: string, setOpen: React.Dispatc
         fetchFollowing()
     }, [fetchFollowing])
 
-    const refElemet = useClickOutside(() => {
+    const handleClose = () => {
         setOpen(false)
         document.body.style.overflowY = 'auto'
-    })
+    }
+    const refElemet = useClickOutside(handleClose)
+    console.log(users);
 
     return (
         <div className='fixed w-full h-full top-0 left-0 bg-black/20 z-50 flex justify-center items-center'>
@@ -56,7 +65,7 @@ const Following = ({ userId, setOpen }: { userId: string, setOpen: React.Dispatc
                             Following
                         </span>
                     </div>
-                    <button><IoClose size={22} /></button>
+                    <button onClick={handleClose}><IoClose size={22} /></button>
                 </div>
                 <div className="py-2 space-y-3">
                     <div className="px-3">
@@ -68,39 +77,50 @@ const Following = ({ userId, setOpen }: { userId: string, setOpen: React.Dispatc
                     </div>
                     <div onScroll={scrollSkip} ref={folRef} className="py-2 space-y-3 max-h-[300px] overflow-auto px-2">
                         {
-                            users?.map((fol: any) => {
-                                return (
-                                    <div key={fol.id}>
-                                        <div className="flex justify-between items-center">
-                                            <div className="flex gap-2 items-center">
-                                                <div className="w-12 h-12 rounded-full overflow-hidden bg-slate-200">
-                                                    {fol?.follower?.picture ?
-                                                        <Image
-                                                            src={fol.follower.picture}
-                                                            alt=""
-                                                            height={50}
-                                                            width={50}
-                                                            className="object-cover h-12 w-12"
-                                                        /> :
-                                                        <div className="flex items-center justify-center w-12 h-12 uppercase bg-red-400 text-white font-medium">
-                                                            {fol?.follower?.username?.split('')[0]}
-                                                        </div>
-                                                    }
+
+                            users?.length ?
+                                users?.map((fol: any) => {
+                                    return (
+                                        <div key={fol.id}>
+                                            <div className="flex justify-between items-center">
+                                                <div className="flex gap-2 items-center">
+                                                    <div className="w-12 h-12 rounded-full overflow-hidden bg-slate-200">
+                                                        {fol?.follower?.picture ?
+                                                            <Image
+                                                                src={fol.follower.picture}
+                                                                alt=""
+                                                                height={50}
+                                                                width={50}
+                                                                className="object-cover h-12 w-12"
+                                                            /> :
+                                                            <div className="flex items-center justify-center w-12 h-12 uppercase bg-red-400 text-white font-medium">
+                                                                {fol?.follower?.username?.split('')[0]}
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                    <div className="">
+                                                        <span className="text-xs font-medium block">{fol?.follower?.username}</span>
+                                                        <span className="text-xs font-medium text-black/50 block">{fol?.follower?.name}</span>
+                                                    </div>
                                                 </div>
-                                                <div className="">
-                                                    <span className="text-xs font-medium block">{fol?.follower?.username}</span>
-                                                    <span className="text-xs font-medium text-black/50 block">{fol?.follower?.name}</span>
-                                                </div>
+                                                <button onClick={() => {
+                                                    // deleteFollower(fol.id as string)
+                                                }} className="text-xs font-medium px-5 py-2 rounded-lg bg-black/10 flex justify-center">
+                                                    {folLoading == fol.id ? <LuLoader2 className='animate-spin w-4 h-4' /> : "Following"}
+                                                </button>
                                             </div>
-                                            <button onClick={() => {
-                                                // deleteFollower(fol.id as string)
-                                            }} className="text-xs font-medium px-5 py-2 rounded-lg bg-black/10 flex justify-center">
-                                                {deleLoading == fol.id ? <LuLoader2 className='animate-spin w-4 h-4' /> : "Following"}
-                                            </button>
                                         </div>
-                                    </div>
-                                )
-                            })
+                                    )
+                                }) :
+                                <div className="text-center w-full py-10">
+                                    No Followers
+                                </div>
+
+                        }
+                        {(loading && users?.length) &&
+                            <div className="flex justify-center w-full py-10">
+                                <LuLoader2 className='animate-spin w-8 h-8' />
+                            </div>
                         }
                     </div>
                 </div>

@@ -10,8 +10,10 @@ interface props {
     postsNum: number;
     followerNum: number;
     followingNum: number;
+    setOpenFollwer: React.Dispatch<React.SetStateAction<boolean>>
+    setOpenFollwing: React.Dispatch<React.SetStateAction<boolean>>
 }
-const NavbarPosts: React.FC<props> = ({ postsNum, followerNum, followingNum, }) => {
+const NavbarPosts: React.FC<props> = ({ postsNum, followerNum, followingNum, setOpenFollwing, setOpenFollwer }) => {
 
     const pathname = usePathname();
     const userId = pathname?.split('/')[2]
@@ -27,7 +29,12 @@ const NavbarPosts: React.FC<props> = ({ postsNum, followerNum, followingNum, }) 
                         Posts
                     </span>
                 </button>
-                <button className='w-full flex flex-col items-center text-xs py-3'>
+                <button
+                    onClick={() => {
+                        setOpenFollwer(true)
+                        document.body.style.overflowY = 'hidden'
+                    }}
+                    className='w-full flex flex-col items-center text-xs py-3'>
                     <span className='font-semibold'>
                         {followerNum}
                     </span>
@@ -35,7 +42,12 @@ const NavbarPosts: React.FC<props> = ({ postsNum, followerNum, followingNum, }) 
                         followers
                     </span>
                 </button>
-                <button className='w-full flex flex-col items-center text-xs py-3'>
+                <button
+                    onClick={() => {
+                        setOpenFollwing(true)
+                        document.body.style.overflowY = 'hidden'
+                    }}
+                    className='w-full flex flex-col items-center text-xs py-3'>
                     <span className='font-semibold'>
                         {followingNum}
                     </span>

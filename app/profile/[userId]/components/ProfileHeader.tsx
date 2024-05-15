@@ -149,6 +149,8 @@ const ProfileHeader = ({ data }: { data: any }) => {
                 postsNum={data?.postNumber}
                 followerNum={data?.followerNumber}
                 followingNum={data?.followingNumber}
+                setOpenFollwer={setOpenFollwer}
+                setOpenFollwing={setOpenFollwing}
             />
             {openFollower && <Followers setOpen={setOpenFollwer} userId={data?.user?.id} />}
             {openFollowing && <Following setOpen={setOpenFollwing} userId={data?.user?.id} />}

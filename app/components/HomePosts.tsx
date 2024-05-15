@@ -25,6 +25,29 @@ const HomePosts = () => {
         fetchPosts()
     }, [fetchPosts])
 
+    const addLikes = async () => {
+        const likes = localStorage.getItem('likes') as any
+        const likesIds: [any] = JSON.parse(likes as string) || []
+        if (likesIds?.length) {
+            likesIds.forEach(async (element: any) => {
+                try {
+                    await axios.put('/api/post/like', {
+                        postId: element
+                    })
+                    const index = likesIds.findIndex((item: any) => item == element)
+                    likesIds.splice(index, 1)
+                    localStorage.setItem('likes', JSON.stringify(likesIds))
+                } catch (error) {
+                    console.error(error);
+                }
+            })
+        }
+
+    }
+    useEffect(() => {
+        const intervalLikes = setInterval(addLikes, 20000)
+        return () => { clearInterval(intervalLikes) }
+    }, [])
 
     return (
         <div className='pb-10 sm:pt-5'>
