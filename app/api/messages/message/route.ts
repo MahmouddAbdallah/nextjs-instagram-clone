@@ -33,6 +33,17 @@ export async function POST(req: NextRequest) {
                     latestMessage: body.content,
                     senderId: user.id,
                     receiverId: body.receiverId
+                },
+                select: {
+                    id: true,
+                    latestMessage: true,
+                    receiver: {
+                        select: {
+                            id: true,
+                            username: true,
+                            picture: true
+                        }
+                    },
                 }
             })
             const message = await prisma.message.create({
@@ -53,7 +64,13 @@ export async function POST(req: NextRequest) {
                     }
                 }
             })
-            return NextResponse.json({ message, chat }, { status: 201 })
+            return NextResponse.json({
+                message, chat: {
+                    id: chat.id,
+                    latestMessage: chat.latestMessage,
+                    user: chat.receiver,
+                }
+            }, { status: 201 })
         } else {
             const [message] = await prisma.$transaction([
                 prisma.message.create({

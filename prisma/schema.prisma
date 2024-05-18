@@ -118,4 +118,5 @@ model Chat {
   receiverId    String    @db.ObjectId()
   latestMessage String?
   Message       Message[]
+  createdAt     DateTime  @default(now())
 }

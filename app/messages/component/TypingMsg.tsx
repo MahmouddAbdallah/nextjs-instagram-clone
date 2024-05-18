@@ -19,7 +19,8 @@ const TypingMsg = ({ userId, chatId }: { userId: string, chatId: string }) => {
                 content: formData.message
             })
             if (data.chat) {
-                context?.setChats(prev => [...prev, data.chat] as any)
+                context?.setChats(prev => [data.chat, ...prev] as any)
+
                 router.push(`/messages?userId=${userId}&chatId=${data.chat.id}`)
             }
             socket.emit("message", { data: data.message, room: chatId });

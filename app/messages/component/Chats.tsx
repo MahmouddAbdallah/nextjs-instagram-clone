@@ -28,7 +28,7 @@ const Chats = ({ setOpen }: { setOpen: React.Dispatch<SetStateAction<boolean>> }
                     return (
                         <Link
                             onClick={() => { setOpen(false) }}
-                            href={`/messages?userId=${chat.user.id}&chatId=${chat.id}`} key={chat.id}>
+                            href={`/messages?userId=${chat?.user?.id}&chatId=${chat?.id}`} key={chat?.id}>
                             <div className='flex items-center gap-3 w-full px-3 py-2'>
                                 <div>
                                     {chat.user.picture ?

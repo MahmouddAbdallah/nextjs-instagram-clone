@@ -14,7 +14,8 @@ export async function GET(req: NextRequest) {
                     { senderId: user.id },
                     { receiverId: user.id }
                 ]
-            }, select: {
+            },
+            select: {
                 id: true,
                 latestMessage: true,
                 sender: {
@@ -31,6 +32,9 @@ export async function GET(req: NextRequest) {
                         picture: true
                     }
                 }
+            },
+            orderBy: {
+                createdAt: 'desc'
             }
         })
         const filterData = chats.map((curr) => {

@@ -12,17 +12,15 @@ const Chatbody = ({ setOpen }: { setOpen: React.Dispatch<SetStateAction<boolean>
     const context = useContextMsgApp();
     const user = useAppSelector((state) => state.user);
 
-    const handleReceivedMessage = useCallback((data: any) => {
-        console.log(data);
-        context?.setMessages((prevMessages: any) => [...prevMessages, data.message] as any);
-    }, [context])
-
     useEffect(() => {
+        const handleReceivedMessage = (data: any) => {
+            context?.setMessages((prevMessages: any) => [...prevMessages, data.message] as any);
+        }
         socket.on('messageResponse', handleReceivedMessage);
         return () => {
-            socket.off('messageResponse', handleReceivedMessage);
+            socket.off('messageResponse');
         };
-    }, [handleReceivedMessage])
+    }, [])
 
     return (
         <div>
