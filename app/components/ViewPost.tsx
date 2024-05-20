@@ -47,13 +47,15 @@ const ViewPost = (
             <div ref={refElement} className='grid grid-cols-12 bg-white max-w-[400px] sm:max-w-[550px] md:max-w-[800px] lg:max-w-[1000px] xl:max-w-[1100px] md:h-[500px] lg:h-[600px] xl:h-[650px] rounded-xl md:rounded-none overflow-hidden'>
                 <div className="col-span-12 md:col-span-7 flex justify-center items-center">
                     <div className='w-full h-full bg-black flex flex-col md:flex-row items-center justify-center'>
-                        <PostUserHeader
-                            className='flex md:hidden bg-white w-full'
-                            picture={post?.user?.picture as string}
-                            username={post?.user?.username as string}
-                            postId={post.id}
-                        />
-                        <div className=" bg-black w-full max-h-[400px] md:max-h-[650px]">
+                        <div className='md:hidden'>
+                            <PostUserHeader
+                                className='flex bg-white w-full'
+                                picture={post?.user?.picture as string}
+                                username={post?.user?.username as string}
+                                postId={post.id}
+                            />
+                        </div>
+                        <div className="w-full max-h-[400px] md:max-h-[650px]">
                             <Image
                                 height={500}
                                 width={500}
