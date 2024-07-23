@@ -20,7 +20,7 @@ const Chatbody = ({ setOpen }: { setOpen: React.Dispatch<SetStateAction<boolean>
         return () => {
             socket.off('messageResponse');
         };
-    }, [])
+    }, [context])
 
     return (
         <div>

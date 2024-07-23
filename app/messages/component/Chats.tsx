@@ -29,16 +29,19 @@ const Chats = ({ setOpen }: { setOpen: React.Dispatch<SetStateAction<boolean>> }
                         <Link
                             onClick={() => { setOpen(false) }}
                             href={`/messages?userId=${chat?.user?.id}&chatId=${chat?.id}`} key={chat?.id}>
-                            <div className='flex items-center gap-3 w-full px-3 py-2'>
+                            <div className='flex items-center gap-3 w-full px-3 py-2 border-b'>
                                 <div>
                                     {chat.user.picture ?
-                                        <Image
-                                            src={chat?.user?.picture as string}
-                                            height={50}
-                                            width={50}
-                                            className='w-14 h-14 rounded-full'
-                                            alt=''
-                                        /> :
+                                        <div className='w-14 h-14'>
+                                            <Image
+                                                src={chat?.user?.picture as string}
+                                                height={50}
+                                                width={50}
+                                                className='w-14 h-14 rounded-full'
+                                                alt=''
+                                            />
+                                        </div>
+                                        :
                                         <div className='w-14 h-14'>
                                             <div className='w-14 h-14 bg-red-400 rounded-full flex justify-center items-center text-white font-medium'>
                                                 {
